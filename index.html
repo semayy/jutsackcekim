@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUTSACK x DOĞAL MESUDİYELİ - ALAÇATI ÇEKİM STRATEJİSİ v1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f9f8f6',
+                            100: '#f2efe9',
+                            200: '#e3dcd1',
+                            300: '#d0c3b2',
+                            400: '#bca58d',
+                            500: '#ab8b6b',
+                            600: '#9b7658',
+                            700: '#815f48',
+                            800: '#6b503e',
+                            900: '#564234',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFCFB;
+            color: #2D2D2D;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Zarif Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d0c3b2; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ab8b6b; }
+
+        /* Tablo Kaydırma Alanı */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #EFEBE4;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
+        }
+        
+        table { width: 100%; min-width: 800px; border-collapse: collapse; }
+        th { background-color: #F9F8F6; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; color: #564234; padding: 1rem; border-bottom: 1px solid #EFEBE4; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid #F5F3F0; font-size: 0.875rem; vertical-align: top; line-height: 1.5; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #FDFCFB; }
+
+        .section-title { font-family: 'Playfair Display', serif; color: #1A1A1A; border-bottom: 2px solid #ab8b6b; display: inline-block; padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 3rem; }
+        
+        .card { background: #fff; border: 1px solid #EFEBE4; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.01); }
+
+        /* Checkbox Stili */
+        input[type="checkbox"] { accent-color: #564234; width: 1.2rem; height: 1.2rem; cursor: pointer; }
+
+        /* PDF Çıktı Ayarları (Kusursuz PDF için) */
+        @media print {
+            body { background: white; font-size: 10pt; }
+            .no-print { display: none !important; }
+            .table-container { border: none; box-shadow: none; overflow: visible; width: 100%; margin-bottom: 20px;}
+            table { min-width: 100%; width: 100%; page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            thead { display: table-header-group; }
+            tfoot { display: table-footer-group; }
+            .section-title { page-break-after: avoid; margin-top: 2rem; }
+            .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; margin-bottom: 15px;}
+            section { page-break-inside: auto; }
+            main { max-width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+
+    <!-- Navbar (PDF'te gizlenir) -->
+    <nav class="bg-white/80 backdrop-blur-md border-b border-brand-200 sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="font-serif font-bold text-lg tracking-wide text-brand-900">JUTSACK <span class="font-sans font-light text-brand-400 mx-1">x</span> DOĞAL MESUDİYELİ</span>
+                <span class="text-[10px] uppercase tracking-widest text-brand-500">Strateji Dokümanı v1.0</span>
+            </div>
+            <button onclick="window.print()" class="bg-brand-800 hover:bg-brand-900 text-white text-xs font-medium px-4 py-2 rounded-md transition duration-200 flex items-center gap-2 shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                PDF İNDİR
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+
+        <!-- Başlık Alanı -->
+        <header class="text-center mb-16 mt-4">
+            <p class="text-brand-500 uppercase tracking-[0.2em] text-sm font-semibold mb-3">Kapsamlı İçerik Planı</p>
+            <h1 class="font-serif text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">Alaçatı Çekim ve <br> Satış Stratejisi</h1>
+            <div class="w-24 h-1 bg-brand-400 mx-auto rounded-full"></div>
+        </header>
+
+        <section>
+            <h2 class="text-2xl section-title">A. KAMPANYA ANA FİKRİ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-brand-50 p-6 rounded-lg border border-brand-100">
+                    <h3 class="text-xs uppercase tracking-widest text-brand-500 font-bold mb-2">Kampanya Adı</h3>
+                    <p class="font-serif text-xl font-medium text-brand-900">Çabasız Yaz: Alaçatı Günlüğü</p>
+                </div>
+                <div class="bg-brand-50 p-6 rounded-lg border border-brand-100">
+                    <h3 class="text-xs uppercase tracking-widest text-brand-500 font-bold mb-2">Ana Fikir</h3>
+                    <p class="text-sm text-gray-700">"Valize at çık, tatilde ne giyeceğim derdini unut." Yaz tatilinin o hafif, yavaş ve telaşsız ruhunu Jutsack ürünlerinin pratikliği ile eşleştirmek.</p>
+                </div>
+            </div>
+            
+            <div class="card space-y-4">
+                <div class="flex gap-4 items-start"><div class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></div><p><strong class="text-brand-900 font-medium">Duygu:</strong> Özgürlük, hafiflik, samimiyet, çabasız şıklık.</p></div>
+                <div class="flex gap-4 items-start"><div class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></div><p><strong class="text-brand-900 font-medium">Satış Hedefi:</strong> Websitesi trafiğini artırmak, ürünlerin "birden fazla şekilde kullanılabileceğini" göstererek sepet ortalamasını yükseltmek.</p></div>
+                <div class="flex gap-4 items-start"><div class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></div><p><strong class="text-brand-900 font-medium">Takipçide Yaratılacak His:</strong> "Ben de bu yaz tatilime giderken yanıma bunlardan almalıyım, hayat kurtarır."</p></div>
+                <div class="flex gap-4 items-start"><div class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></div><p><strong class="text-brand-900 font-medium">Ürünlerin Rolü:</strong> Başrol değil, Doğal'ın keyifli tatilinin en iyi eşlikçileri. Kahve içerken, sokakta yürürken, plaja inerken doğal birer detaylar.</p></div>
+                <div class="flex gap-4 items-start"><div class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></div><p><strong class="text-brand-900 font-medium">Doğal’ın Hesabında Konumlandırma:</strong> Doğal'ın tatil anıları ve yaz stili ipuçları arasına serpiştirilmiş, "kız kıza bir tavsiye" niteliğinde organik yerleşim.</p></div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">B. DOĞAL MESUDİYELİ HESAP DİLİ REHBERİ</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Başlık</th><th>Analiz</th><th>Jutsack’e Uyarlama</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="font-medium text-brand-900">Konuşma Dili</td><td>Senli benli, sıcak, abartısız</td><td class="text-brand-700 italic">"Kızlar bu pareoyu yanımdan ayıramıyorum"</td></tr>
+                        <tr><td class="font-medium text-brand-900">Story Dili</td><td>Anlık, plansız gibi duran, interaktif</td><td class="text-brand-700 italic">"Kahveye inerken direkt bunu geçirdim üstüme, sizce nası?"</td></tr>
+                        <tr><td class="font-medium text-brand-900">Caption Dili</td><td>Kısa, bir anı veya durum anlatan</td><td class="text-brand-700 italic">"Alaçatı rüzgarıyla imtihanım ama şort takımım sağ olsun"</td></tr>
+                        <tr><td class="font-medium text-brand-900">Mizah Tonu</td><td>Kendiyle barışık, hafif ironik</td><td class="text-brand-700 italic">"Valizi küçük tutup 3 gün aynı pareoyla yaşayanlar derneği"</td></tr>
+                        <tr><td class="font-medium text-brand-900">Satışa Geçiş Şekli</td><td>Deneyim paylaşımı üzerinden</td><td class="text-brand-700 italic">"Çok sordunuz, linki buraya bırakıyorum hazır stok varken"</td></tr>
+                        <tr><td class="font-medium text-red-700">Kaçınılacak İfadeler</td><td>Kurumsal, aciliyet bildiren, aşırı övgü</td><td class="text-red-600 font-medium">"Fırsatı kaçırmayın", "Premium kalite", "Hemen al"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-white border border-brand-200 rounded-lg p-6 mt-6">
+                <h3 class="font-serif text-lg font-bold text-brand-900 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"></path></svg>
+                    Doğal’ın Söyleyebileceği 25 Cümle (Eksiksiz)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">1. "Kızlar, tatil bavulumun yıldızını açıklıyorum."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">2. "Sabah kahvesine inerken ne giysem derdine son."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">3. "Bu mini wrap'i çantaya bağlamak kimin aklına geldiyse helal olsun, yani benim."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">4. "Alaçatı sıcağında tek katlanabildiğim kumaş bu."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">5. "Akşamüstü esintisine karşı takımın gömleğini çektim."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">6. "Bandana küçük ama etkisi büyük, net."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">7. "Plajdan direkt yemeğe geçmeli günler başladı."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">8. "Ütü istemiyor, benim için olay bitmiştir."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">9. "Bir pareo kaç farklı şekilde giyilebilir denemeleri vol. 1"</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">10. "Valizde o kadar az yer kaplıyor ki inanamazsınız."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">11. "Çabasız güzellik dedikleri bu takım olsa gerek."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">12. "Şu deseni görüp de yaza girmemek imkansız."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">13. "Elim sürekli buna gidiyor, yıkayıp yıkayıp giyiyorum."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">14. "Akşam yemeği için sadece takıları değiştirmem yetti."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">15. "Bunu stok bitmeden yakaladığım için kendimi tebrik ediyorum."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">16. "Saçım bugün hiç şekil almadı, kurtarıcı bandanam devrede."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">17. "Hem şık olayım hem de hiç uğraşmayayım item'ı."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">18. "Güneş, rüzgar ve uçuşan bir pareo... Daha ne isteriz?"</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">19. "Mini wrap ile ayna karşısı şovumu bırakıyorum."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">20. "Sorduğunuz o takım... Linki buraya iliştirdim."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">21. "Kombini düşünmeden giy çık, en sevdiğim aktivite."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">22. "Tatilin yarısı bitti, ben hala bu şortlayım."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">23. "Bazen tek bir detay bütün kombini toplar."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">24. "Bugün kendimi bu renklere teslim ettim."</div>
+                    <div class="p-3 bg-brand-50 rounded text-gray-700">25. "Yazın üniformasını buldum diyebilir miyiz?"</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">C. 2026 INFLUENCER BENCHMARK TABLOSU</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Trend Format</th><th>Neden Çalışıyor?</th><th>Jutsack’e Uyarlama</th><th>Doğal’ın Hesabında Kullanımı</th><th>Satış Etkisi</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="font-medium text-brand-900">Benimle Alaçatı’ya gel</td><td>Vlog hissi, aidiyet</td><td>Ürünleri yola çıkarken, varışta gösterme</td><td>Tatil başlangıcı Reels'i</td><td class="font-semibold text-green-700">Yüksek (Story)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Tatil bavulu hazırlığı</td><td>Pratik bilgi, merak</td><td>"Az eşya çok kombin" vurgusu</td><td>Yatağa serilmiş Jutsack'ler</td><td class="font-medium text-yellow-600">Orta (Farkındalık)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Plajdan akşama geçiş</td><td>Hayat kurtaran çözüm</td><td>Pareo ile beachte, gömlekle barda</td><td>Hızlı geçişli edit (snap)</td><td class="font-bold text-green-800">Çok Yüksek (İkna)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Ayna karşısı kombin</td><td>Samimi, filtressiz</td><td>Otele dönüş, akşam hazırlığı</td><td>"Bugün bunu giydim" story'si</td><td class="font-semibold text-green-700">Yüksek (Etkileşim)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Çantamda ne var?</td><td>Merak uyandırıcı</td><td>Plaj çantasına sığan Mini Wrap</td><td>Kafede çantadan çıkarma</td><td class="font-medium text-yellow-600">Orta</td></tr>
+                        <tr><td class="font-medium text-brand-900">Bugün hangisini giyeyim?</td><td>İnteraktif karar</td><td>İki renk Şort Takım arası seçim</td><td>Story Anketi (A mı B mi?)</td><td class="font-semibold text-green-700">Yüksek (Yönlendirme)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Story anketi</td><td>Algoritma dostu</td><td>Bandana saçta mı, boyunda mı?</td><td>"Sizce hangisi daha iyi durdu?"</td><td class="font-medium text-yellow-600">Orta</td></tr>
+                        <tr><td class="font-medium text-brand-900">Son stok hissi</td><td>Doğal FOMO</td><td>"Sorduğunuz desenin sonları"</td><td>Linkli ve "hemen tükeniyor" notlu</td><td class="font-bold text-red-600">Maksimum (Aciliyet)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Sessiz lüks yaz stili</td><td>Kalite algısı</td><td>Doğal kumaş vurgusu, taş duvar önü</td><td>Yavaşlatılmış, estetize Reels</td><td class="font-semibold text-green-700">Yüksek</td></tr>
+                        <tr><td class="font-medium text-brand-900">Kahve molası kombini</td><td>Ulaşılabilir hayat</td><td>Şort takım + kahve fincanı</td><td>Çarşıda otururken spontane çekim</td><td class="font-medium text-yellow-600">Orta</td></tr>
+                        <tr><td class="font-medium text-brand-900">Beach sonrası şehir</td><td>Çok yönlülük</td><td>Pareo altı şortla yürüyüş</td><td>"Otel yolunda biz" captionlı</td><td class="font-semibold text-green-700">Yüksek</td></tr>
+                        <tr><td class="font-medium text-brand-900">3 farklı bağlama şekli</td><td>Kaydedilebilir İçerik</td><td>Pareo/Wrap kullanım tüyoları</td><td>Eğitici ama hızlı Reels</td><td class="font-bold text-green-800">Çok Yüksek (Kaydet)</td></tr>
+                        <tr><td class="font-medium text-brand-900">Tek ürün 3 kombin</td><td>Fiyat/Performans</td><td>Şort Takımı farklı aksesuarlarla</td><td>Ayna karşısında hızlı değişim</td><td class="font-semibold text-green-700">Yüksek</td></tr>
+                        <tr><td class="font-medium text-brand-900">Mini tatil kapsül valiz</td><td>Çözüm odaklı</td><td>4 parça Jutsack = 4 gün</td><td>Bavul üstünden anlatım</td><td class="font-medium text-yellow-600">Orta</td></tr>
+                        <tr><td class="font-medium text-brand-900">Gün batımı kombini</td><td>Görsel tatmin</td><td>Golden hour, uçuşan kumaş</td><td>Estetik, müzikli, az yazılı post</td><td class="font-medium text-yellow-600">Orta (Marka İmajı)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">D. ÜRÜN GRUBU STRATEJİLERİ</h2>
+            
+            <!-- 1. Pareo -->
+            <div class="mb-10">
+                <h3 class="text-xl font-serif font-bold text-brand-900 mb-4">1. Pareo</h3>
+                <div class="table-container mb-4">
+                    <table>
+                        <thead><tr><th>Ürün</th><th>Ana Duygu</th><th>Kullanım Alanı</th><th>Görsel Dil</th><th>Satış Argümanı</th><th>Story Dili</th><th>Reels Dili</th><th>CTA</th></tr></thead>
+                        <tbody><tr><td class="font-medium">Pareo</td><td>Özgür yaz parçası</td><td>Plaj üstü, yürüyüş, otel</td><td>Uçuşan, rüzgarlı, gün batımı</td><td>Tek parça ile çok kullanım</td><td>"Sabahtan akşama üzerimde"</td><td>"Bir pareo, 3 farklı hayat"</td><td>Kaydetlik bağlama şekilleri</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="bg-white border-l-4 border-brand-400 p-4 rounded-r-lg">
+                    <strong class="block text-brand-900 mb-2">Doğal Bunu Nasıl Anlatır? (10 Cümle)</strong>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-1">
+                        <li>"Rüzgarı arkama aldım, pareomla şov yapıyorum."</li>
+                        <li>"Bütün gün denizdeydim, üstüme bunu atıp yemeğe geçiyorum."</li>
+                        <li>"Bu desen beni resmen yaz moduna soktu."</li>
+                        <li>"Pareo dediğin böyle uçuş uçuş olmalı."</li>
+                        <li>"Plaj çantamın demirbaşı."</li>
+                        <li>"Nasıl bağladığımı sormuşsunuz, hemen gösteriyorum."</li>
+                        <li>"Şortun üstüne etek gibi sardım, efsane durdu."</li>
+                        <li>"Kumaşı o kadar hafif ki yokmuş gibi."</li>
+                        <li>"Güneş batarken favori sahnem ve favori parçam."</li>
+                        <li>"Valize at, kırışmaz, dert etme."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. Mini Wrap -->
+            <div class="mb-10">
+                <h3 class="text-xl font-serif font-bold text-brand-900 mb-4">2. Mini Wrap</h3>
+                <div class="table-container mb-4">
+                    <table>
+                        <thead><tr><th>Ürün</th><th>Ana Duygu</th><th>Kullanım Alanı</th><th>Görsel Dil</th><th>Satış Argümanı</th><th>Story Dili</th><th>Reels Dili</th><th>CTA</th></tr></thead>
+                        <tbody><tr><td class="font-medium">Mini Wrap</td><td>Küçük parça büyük stil</td><td>Bel, saç, çanta, üst</td><td>Yakın plan, ayna önü</td><td>Az yer, çok iş</td><td>"Ufacık detay nasıl değiştirdi"</td><td>"Çantaya bağla, kombini yükselt"</td><td>Stiline ekle</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="bg-white border-l-4 border-brand-400 p-4 rounded-r-lg">
+                    <strong class="block text-brand-900 mb-2">Doğal Bunu Nasıl Anlatır? (10 Cümle)</strong>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-1">
+                        <li>"Çantama bağladım, havası anında değişti."</li>
+                        <li>"Saçım açık kalınca terliyorum, wrap hayat kurtardı."</li>
+                        <li>"Şu minik şeyin valizde kapladığı yer sıfır, işlevi yüz."</li>
+                        <li>"Bunu üst olarak denedim, baya başarılı oldu bence."</li>
+                        <li>"Belime aksesuar niyetine doladım."</li>
+                        <li>"Rengi resmen tenimle bütünleşti."</li>
+                        <li>"Bir wrap ile üç farklı tarz yapıyoruz, toplanın."</li>
+                        <li>"Aynada kendime bakmalara doyamadığım detay."</li>
+                        <li>"Küçük dokunuşları severiz."</li>
+                        <li>"Linkini bıraktım, tatil öncesi kapın."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. Bandana -->
+            <div class="mb-10">
+                <h3 class="text-xl font-serif font-bold text-brand-900 mb-4">3. Bandana</h3>
+                <div class="table-container mb-4">
+                    <table>
+                        <thead><tr><th>Ürün</th><th>Ana Duygu</th><th>Kullanım Alanı</th><th>Görsel Dil</th><th>Satış Argümanı</th><th>Story Dili</th><th>Reels Dili</th><th>CTA</th></tr></thead>
+                        <tbody><tr><td class="font-medium">Bandana</td><td>Tamamlayıcı imza</td><td>Saç, boyun, bilek</td><td>Saç hareketi, sokak stili</td><td>Küçük dokunuşla toparlar</td><td>"Saçlar isyanda olunca ben"</td><td>"Bandana styling 101"</td><td>Tarzını tamamla</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="bg-white border-l-4 border-brand-400 p-4 rounded-r-lg">
+                    <strong class="block text-brand-900 mb-2">Doğal Bunu Nasıl Anlatır? (10 Cümle)</strong>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-1">
+                        <li>"Denizden çıkmış saça en iyi giden şey."</li>
+                        <li>"Boynuma fular gibi doladım, nasıl?"</li>
+                        <li>"Bilekliğimle aynı renk bandana bulmuşumdur."</li>
+                        <li>"Rüzgarda saçım yüzüme yapışmasın diye en iyi çözüm."</li>
+                        <li>"Küçücük bir desen tüm havayı değiştiriyor."</li>
+                        <li>"Hasır şapkanın altından şöyle hafifçe çıkacak."</li>
+                        <li>"Bugünün kurtarıcısı bu tatlış oldu."</li>
+                        <li>"Kombini toparlayan o sihirli dokunuş."</li>
+                        <li>"Valizin en minik ama en etkili parçası."</li>
+                        <li>"Renk seçenekleri o kadar güzel ki seçemedim."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. Şort Gömlek Takım -->
+            <div>
+                <h3 class="text-xl font-serif font-bold text-brand-900 mb-4">4. Şort Gömlek Takım</h3>
+                <div class="table-container mb-4">
+                    <table>
+                        <thead><tr><th>Ürün</th><th>Ana Duygu</th><th>Kullanım Alanı</th><th>Görsel Dil</th><th>Satış Argümanı</th><th>Story Dili</th><th>Reels Dili</th><th>CTA</th></tr></thead>
+                        <tbody><tr><td class="font-medium">Takım</td><td>Hazır yaz kombini</td><td>Çarşı, kahve, sabah</td><td>Tam boy yürüyüş, oturarak</td><td>Düşünmeden giy çık</td><td>"Günün üniforması belli oldu"</td><td>"1 takım, 3 mekan"</td><td>Valize at çık</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="bg-white border-l-4 border-brand-400 p-4 rounded-r-lg">
+                    <strong class="block text-brand-900 mb-2">Doğal Bunu Nasıl Anlatır? (10 Cümle)</strong>
+                    <ul class="list-disc list-inside text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-1">
+                        <li>"Ne giyeceğim diye düşünmek istemediğim o sabah."</li>
+                        <li>"Altı üstü takım, sıfır efor, tam puan."</li>
+                        <li>"Kahvemi almaya iniyorum, üstümde tabii ki takımım."</li>
+                        <li>"Kumaşı efil efil, hiç terletmiyor."</li>
+                        <li>"Sadece gömleğini jean şortla da giyerim ben bunun."</li>
+                        <li>"Akşam serinliğinde şort takım hayat kurtarır."</li>
+                        <li>"Çarşıda rahat rahat gezmelik."</li>
+                        <li>"Üst üste giy çıkar yapmaktan sıkılanlara duyurulur."</li>
+                        <li>"Tatilin vazgeçilmez üniformasını buldum."</li>
+                        <li>"Renk uyumu tam Alaçatı ruhu değil mi?"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-4 mt-12 border-b-2 border-brand-500 pb-2">
+                <h2 class="text-2xl font-serif text-brand-900 m-0">E. 26 HAZİRAN – 31 TEMMUZ GÜNLÜK PAYLAŞIM TAKVİMİ</h2>
+                <span class="text-xs bg-red-100 text-red-800 font-bold px-2 py-1 rounded mt-2 md:mt-0">HİÇBİR VERİ KISALTILMAMIŞTIR</span>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-24">Tarih</th><th>Gün</th><th>Ürün</th><th>Format</th><th>İçerik Fikri</th><th>Sahne/Kadraj</th><th>Caption Taslağı</th><th>Story / CTA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="font-bold whitespace-nowrap">26 Haz</td><td>Cuma</td><td>Hepsi</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x3</span></td><td>Tatil Başlıyor</td><td>Bavul üstü ürünler</td><td>-</td><td>"Kızlar valiz hazır, favorileri aldım" Link!</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">27 Haz</td><td>C.tesi</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Plajdan Akşama</td><td>Geçiş: Şezlong -> Sokak</td><td>Plaj modundan çıkmam 5 dakikamı aldı.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">28 Haz</td><td>Pazar</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Pazar Kahvesi</td><td>Kafede otururken, kitapla</td><td>Çabasız pazar günlerine takımım eşlik ediyor.</td><td>"Kahveye inerken bunu çektim"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">29 Haz</td><td>P.tesi</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Saçta Wrap</td><td>Ayna önü bağlama</td><td>-</td><td>"Bugün saçlar açık, wrap devrede" Link</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">30 Haz</td><td>Salı</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>3 Bağlama Şekli</td><td>Omuz üstü, beyaz duvar</td><td>Bir bandanayı ne kadar farklı kullanabilirim?</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">1 Tem</td><td>Çarş</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Çarşıda Pareo</td><td>Sokakta yürürken tam boy</td><td>Pareoyu etek yapıp çarşıya inme keyfi.</td><td>"Bunu etek sandınız di mi?"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">2 Tem</td><td>Perş</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Anket (Renk)</td><td>İki takım yan yana yatakta</td><td>-</td><td>"Akşama hangisi? Mavi mi Bej mi?"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">3 Tem</td><td>Cuma</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x3</span></td><td>Kazanan Renk</td><td>Kazananı giymiş aynada</td><td>-</td><td>"Sizin seçiminizi giydim! Linkini bıraktım"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">4 Tem</td><td>C.tesi</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Çantaya Bağlama</td><td>Yürürken çanta detayı</td><td>Küçük dokunuşların hastasıyız.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">5 Tem</td><td>Pazar</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post</span></td><td>Rüzgarlı Sokak</td><td>Boyunda bandana, şapka</td><td>Alaçatı rüzgarıyla başa çıkma yöntemim.</td><td>"Kombin kurtarıcım"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">6 Tem</td><td>P.tesi</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Gün Batımı</td><td>Şarap kadehi, deniz man.</td><td>-</td><td>"Bu an hiç bitmesin. Pareom da uyum sağladı"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">7 Tem</td><td>Salı</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>1 Takım 2 Stil</td><td>Spor Ayakkabı vs Terlik</td><td>Şort takımı gündüzden geceye taşıyoruz.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">8 Tem</td><td>Çarş</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Belde Kullanım</td><td>Taş kapı önü, detay</td><td>Kemer yerine wrap kullanma aydınlanması.</td><td>"Sizce de çok iyi durmuyor mu?"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">9 Tem</td><td>Perş</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Anket (Kullanım)</td><td>Saçta vs Bilekte kolajı</td><td>-</td><td>"Saç mı bilek mi? Siz nerede seviyorsunuz?"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">10 Tem</td><td>Cuma</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x3</span></td><td>Stok Uyarısı</td><td>Üstüne atıp çıkarken</td><td>-</td><td>"Sorduğunuz desen az kalmış, kapın!" Link</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">11 Tem</td><td>C.tesi</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Sokak Yürüyüşü</td><td>Arkadan takip eden açı</td><td>Benimle Alaçatı sokaklarında kaybolun.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">12 Tem</td><td>Pazar</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post</span></td><td>Pazar Tembelliği</td><td>Otel balkonu, kitap</td><td>Balkon keyfi ve vazgeçilmez mini wrap'im.</td><td>"Balkon modifikasyonu tamam"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">13 Tem</td><td>P.tesi</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Kahvaltı Modu</td><td>Çay yudumlarken, boyunda</td><td>-</td><td>"Günaydın! Boynumdaki minik detaya düşüldü"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">14 Tem</td><td>Salı</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Farklı Bağlama</td><td>Pareo bağlama tüyoları</td><td>Pareomu nasıl elbise yapıyorum, toplanın.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">15 Tem</td><td>Çarş</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Çanta Kombini</td><td>Hasır çanta + Takım</td><td>Hasır çantam ve takımım ayrılmaz ikili oldu.</td><td>"Çanta + Takım uyumu"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">16 Tem</td><td>Perş</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Soru Cevap</td><td>Çantadaki wrap yakından</td><td>-</td><td>"En çok wrap'i sordunuz, hemen anlatıyorum"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">17 Tem</td><td>Cuma</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x3</span></td><td>Hızlı Satış</td><td>Saçlarını toplarken video</td><td>-</td><td>"Pratiklikte sınır tanımam. Hemen linkte!"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">18 Tem</td><td>C.tesi</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Bisiklet Keyfi</td><td>Bisiklet selesi, rüzgar</td><td>Alaçatı sokakları ve pareomun rüzgar dansı.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">19 Tem</td><td>Pazar</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post</span></td><td>Soft Pazar</td><td>Otel lobisinde bekleme</td><td>Pazar rahatlığı dediğimiz şey tam olarak bu.</td><td>"Rahatlık diyorum"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">20 Tem</td><td>P.tesi</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Bilek Detayı</td><td>Kahve tutan el, bilekte</td><td>-</td><td>"Pazartesi sendromunu minik detaylarla yeniyorum"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">21 Tem</td><td>Salı</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Hızlı Hazırlık</td><td>5 saniyede saça bağlama</td><td>Hazırlanmam sadece 5 saniye sürdü.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">22 Tem</td><td>Çarş</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Golden Hour</td><td>Ters ışıkta silüet</td><td>Gün batımı renkleri ve ben.</td><td>"Günün en sevdiğim saati"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">23 Tem</td><td>Perş</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Anket (Aksesuar)</td><td>Kolyeler ile takım kombini</td><td>-</td><td>"İnce altın mı, renkli boncuk mu?"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">24 Tem</td><td>Cuma</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x3</span></td><td>Haftasonu İçin</td><td>Valize atarken</td><td>-</td><td>"Haftasonu kaçamağına hazırız! Wrap de valizde"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">25 Tem</td><td>C.tesi</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Rüzgarla Sınav</td><td>Komik rüzgar uçuşu anı</td><td>Alaçatı rüzgarı vs Benim bandanam.</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">26 Tem</td><td>Pazar</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post</span></td><td>Beach Club</td><td>Şezlongda yatarken ayaklar</td><td>Bütün gün buradan kalkmayı düşünmüyorum.</td><td>"Plaj modum ektedir"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">27 Tem</td><td>P.tesi</td><td>Takım</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Şehre Dönüş</td><td>Araba içi çekim</td><td>-</td><td>"Dönüş yolu kombini belli oldu. Çok rahat"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">28 Tem</td><td>Salı</td><td>Wrap</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Reels</span></td><td>Üst Gibi Giy</td><td>Wrap'i büstiyer yapma</td><td>Bir wrap ne kadar işlevsel olabilir konulu...</td><td>-</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">29 Tem</td><td>Çarş</td><td>Bandana</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Post(C)</span></td><td>Çanta Sapında</td><td>Sandalyede duran çanta</td><td>Çantamın havasını değiştiren o minik kahraman.</td><td>"Detaylara inelim"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">30 Tem</td><td>Perş</td><td>Pareo</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story</span></td><td>Son Yaz Günleri</td><td>Pareo ile yavaş yürüyüş</td><td>-</td><td>"Bu yazı bu pareoyla bitireceğim sanırım"</td></tr>
+                        <tr><td class="font-bold whitespace-nowrap">31 Tem</td><td>Cuma</td><td>Hepsi</td><td><span class="bg-gray-100 px-2 py-1 rounded text-xs">Story x4</span></td><td>Tatil Özeti</td><td>Kolaj: 4 ürün farklı yerde</td><td>-</td><td>"Bavulumun asıl kahramanları! Linkleri burada"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">F. ÇEŞME / ALAÇATI ÇEKİM PLANI (15 Lokasyon)</h2>
+            <p class="text-sm text-gray-600 mb-6 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <strong>Genel Kural:</strong> Kameraman (amatör arkadaş/eş) telefonu hep dik tutmalı. Doğal'ın yüzüne sert güneş gelmemeli. Netleme hep üründe/yüzde olmalı.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>No / Sahne Adı</th><th>Ürün</th><th>Saat & Işık</th><th>Kadraj & Poz</th><th>Kamera/Video</th><th>Story/Reels</th><th>Dikkat Edilecek</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="font-bold">1. Alaçatı Taş Sokak</td><td>Şort Takım</td><td>08:30<br><span class="text-xs text-gray-500">Yumuşak Sabah</span></td><td>Tam Boy<br>Kamereya doğru yürüme</td><td>Sabit dur, model gelsin</td><td>Reels (Şehir Yürüyüşü)</td><td class="text-red-600 text-xs font-medium">Arkada kalabalık olmasın, bekle</td></tr>
+                        <tr><td class="font-bold">2. Beyaz Duvar / Mavi Kapı</td><td>Bandana</td><td>11:00<br><span class="text-xs text-gray-500">Dik (Gölgede ol)</span></td><td>Belden Yukarı<br>Saç düzeltme</td><td>Hafif aşağıdan yukarı</td><td>Story (Stil İpucu)</td><td class="text-red-600 text-xs font-medium">Kapı rengiyle ürün rengi patlasın</td></tr>
+                        <tr><td class="font-bold">3. Begonvilli Sokak</td><td>Pareo</td><td>16:00<br><span class="text-xs text-gray-500">Yandan</span></td><td>Boydan Orta<br>Etek ucunu tutma</td><td>Modeli takip et (Yürü)</td><td>Post (4:5)</td><td class="text-red-600 text-xs font-medium">Begonvilin rengi ürünü yutmasın</td></tr>
+                        <tr><td class="font-bold">4. Beach Club Girişi</td><td>Pareo</td><td>12:00<br><span class="text-xs text-gray-500">Sert</span></td><td>Tam Boy<br>Hasır çanta sırtta duruş</td><td>Geniş Açı (0.5x) kullanma</td><td>Story (Plaja giriş)</td><td class="text-red-600 text-xs font-medium">Ürün rüzgarda kırışık görünmesin</td></tr>
+                        <tr><td class="font-bold">5. Plaj / Kumsal</td><td>Mini Wrap</td><td>14:00<br><span class="text-xs text-gray-500">Tepe</span></td><td>Detay (Göğüs)<br>Şezlongda yatarken</td><td>Yukardan aşağı çekim</td><td>Post (Detay)</td><td class="text-red-600 text-xs font-medium">Kumda parlama olmasın</td></tr>
+                        <tr><td class="font-bold">6. Sahil Yürüyüş Yolu</td><td>Şort Takım</td><td>18:30<br><span class="text-xs text-gray-500">Yumuşak Altın</span></td><td>Boydan<br>Yan profil, ufka bakış</td><td>Telefon hizası belde</td><td>Reels (Günlük hayat)</td><td class="text-red-600 text-xs font-medium">Arkadan geçen insanları kadrajdan çıkar</td></tr>
+                        <tr><td class="font-bold">7. Otel Odası Valiz Hazırlığı</td><td>Hepsi</td><td>09:00<br><span class="text-xs text-gray-500">Pencere ışığı</span></td><td>Flatlay (Kuşbakışı)<br>Ürünleri yatağa atma</td><td>Sabit, tripot veya el titremesin</td><td>Reels (Bavul)</td><td class="text-red-600 text-xs font-medium">Odanın ışıklarını kapat, sadece gün ışığı</td></tr>
+                        <tr><td class="font-bold">8. Kahve / Limonata Masası</td><td>Bandana</td><td>15:00<br><span class="text-xs text-gray-500">Şemsiye gölgesi</span></td><td>Masa üstü detay<br>Bardağı tutan el/bilek</td><td>Ürünle bardağı aynı netlikte tut</td><td>Story (Kahve molası)</td><td class="text-red-600 text-xs font-medium">Masa dağınık olmasın, estetik dursun</td></tr>
+                        <tr><td class="font-bold">9. Alaçatı Çarşı</td><td>Şort Takım</td><td>19:00<br><span class="text-xs text-gray-500">Düşük ışık</span></td><td>Dizden Yukarı<br>Etrafa bakarak gülme</td><td>Ağır Çekim (Slo-mo) video</td><td>Reels (Gezinti)</td><td class="text-red-600 text-xs font-medium">Akşam vitrin ışıklarını arkaya al</td></tr>
+                        <tr><td class="font-bold">10. Gün Batımı Noktası</td><td>Pareo</td><td>19:45<br><span class="text-xs text-gray-500">Ters Işık(Silüet)</span></td><td>Tam Boy<br>Kolları açıp dönme</td><td>Doğal'ın etrafında 180 derece dön</td><td>Reels (Final)</td><td class="text-red-600 text-xs font-medium">Güneşi tam arkasına al, yüzünü gösterme</td></tr>
+                        <tr><td class="font-bold">11. Scooter / Bisiklet Yanı</td><td>Şort Takım</td><td>17:00<br><span class="text-xs text-gray-500">Yandan sıcak</span></td><td>Geniş (Tam boy)<br>Gidona yaslanma</td><td>Aşağıdan hafif yukarı (Boy uzun)</td><td>Post (Kombin)</td><td class="text-red-600 text-xs font-medium">Araç plakası veya marka görünmesin</td></tr>
+                        <tr><td class="font-bold">12. Taş Duvar Önü</td><td>Mini Wrap</td><td>10:30<br><span class="text-xs text-gray-500">Güçlü gölge</span></td><td>Göğüs-Bel<br>Üst olarak giyilmiş, poz</td><td>Sabit, tam karşıdan</td><td>Story (OOTD)</td><td class="text-red-600 text-xs font-medium">Taşın dokusu ile kumaş dokusu net çıksın</td></tr>
+                        <tr><td class="font-bold">13. Otel Havuz Kenarı</td><td>Pareo</td><td>13:00<br><span class="text-xs text-gray-500">Keskin güneş</span></td><td>Tam Boy (Arkadan)<br>Suya bakarak dikilme</td><td>Yukarıdan aşağı yavaş tilt</td><td>Reels (Plajdan)</td><td class="text-red-600 text-xs font-medium">Havuz fayansları parlamasın, netliği kilitle</td></tr>
+                        <tr><td class="font-bold">14. Araba Bagajı / Tatil</td><td>Mini Wrap</td><td>08:00<br><span class="text-xs text-gray-500">Serin sabah</span></td><td>Orta (Bagaj içi)<br>Valiz fermuarı çekerken</td><td>Zoom in (yavaşça)</td><td>Story (Yolculuk)</td><td class="text-red-600 text-xs font-medium">Arabanın markası çok belli olmasın</td></tr>
+                        <tr><td class="font-bold">15. Akşamüstü Yürüyüş Yolu</td><td>Bandana</td><td>18:00<br><span class="text-xs text-gray-500">Golden hour</span></td><td>Omuzdan Yukarı<br>Arkaya dönüp gülümseme</td><td>Yürürken arkadan omuz hizası</td><td>Post (Portre)</td><td class="text-red-600 text-xs font-medium">Arka plan flulaşsın (Portre modu)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">G. ÜRÜN BAZLI SHOT LIST (Tam 60 Fikir)</h2>
+            <p class="text-sm text-gray-600 mb-6">Kural: Her fikirde lokasyon, saat, aksesuar, poz veya kadrajdan en az 3'ü değişmiştir.</p>
+
+            <h3 class="text-lg font-bold text-brand-800 mb-3 uppercase tracking-wider">PAREO SHOT LIST (15 Fikir)</h3>
+            <div class="table-container mb-8">
+                <table>
+                    <thead><tr><th>No</th><th>Sahne Adı</th><th>Lokasyon</th><th>Kadraj</th><th>Poz/Hareket</th><th>Ürün Görünümü</th><th>Aksesuar</th><th>Işık</th><th>Video Hareketi</th><th>Story/Reels/Hook</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Uçuşan Özgürlük</td><td>Kumsal</td><td>Tam boy</td><td>Rüzgara karşı dönme</td><td>Açık, pelerin gibi</td><td>Hasır Şapka</td><td>Golden Hour</td><td>Yavaş çekim (Slo-mo)</td><td>Reels: "Pareonun en sevdiğim hali"</td></tr>
+                        <tr><td>2</td><td>Etek Gibi</td><td>Çarşı Sokak</td><td>Belden aşağı</td><td>Tempolu yürüme</td><td>Bele bağlı etek</td><td>Hasır Çanta</td><td>Akşamüstü</td><td>Arkadan takip</td><td>Story: "Etek sandınız değil mi?"</td></tr>
+                        <tr><td>3</td><td>Havuz Kenarı</td><td>Otel Havuzu</td><td>Boydan</td><td>Suya doğru adımlama</td><td>Boyundan bağlı elbise</td><td>Güneş Gözlüğü</td><td>Öğlen (Tepe)</td><td>Yukarıdan tilt</td><td>Post: Plaj mod on.</td></tr>
+                        <tr><td>4</td><td>Kahve Beklerken</td><td>Limonata Masası</td><td>Dizden yukarı</td><td>Sandalyede yan oturma</td><td>Omuza atılmış şal</td><td>Hasır Şapka</td><td>Gölge</td><td>Sabit</td><td>Story: "Serinleyince omuzlara attım"</td></tr>
+                        <tr><td>5</td><td>Gün Batımı Dansı</td><td>Seyir Tepesi</td><td>Silüet</td><td>Kollar açık dönüş</td><td>Ters ışıkta uçuşan</td><td>Yok</td><td>Gün Batımı</td><td>Modelin etrafında dön</td><td>Reels: "Favori yaz bestem"</td></tr>
+                        <tr><td>6</td><td>Ayna Selfiesi</td><td>Otel Odası Ayna</td><td>Omuzdan bel</td><td>Ayna önü bağlama</td><td>Göğüste düğümlü</td><td>Büyük Küpe</td><td>Pencere ışığı</td><td>Zoom in</td><td>Reels: "Pareo nasıl büstiyer olur?"</td></tr>
+                        <tr><td>7</td><td>Plaja İniş</td><td>Taş Merdiven</td><td>Tam boy</td><td>Basamak inme</td><td>Alt uçları bağlı</td><td>Büyük Plaj Çantası</td><td>Sabah</td><td>Aşağıdan yukarı çekim</td><td>Story: "Sahile iniyoruz"</td></tr>
+                        <tr><td>8</td><td>Kitap Keyfi</td><td>Balkon / Şezlong</td><td>Detay (Bel)</td><td>Kitap okurken</td><td>Üstüne örtülmüş</td><td>Kitap + Gözlük</td><td>İkindi</td><td>Sabit, yapraklar oynasın</td><td>Post: "Sakin saatler"</td></tr>
+                        <tr><td>9</td><td>Bisiklet Selesi</td><td>Bisiklet Yanı</td><td>Tam Boy</td><td>Bisiklete yaslanma</td><td>Tek omuzdan çapraz</td><td>Çiçek Sepeti</td><td>Yan sıcak</td><td>Aşağıdan</td><td>Reels: "Alaçatı klasiği"</td></tr>
+                        <tr><td>10</td><td>Akşam Yemeğine</td><td>Restoran Girişi</td><td>Dizden yukarı</td><td>Kamereya gülümseme</td><td>Elbise gibi şık</td><td>İnce Topuklu</td><td>Loş Işık</td><td>Yaklaşan (Dolly in)</td><td>Story: "Yemeğe hazırız"</td></tr>
+                        <tr><td>11</td><td>Kapı Önü Pozu</td><td>Mavi Kapı Önü</td><td>Tam boy</td><td>Duvara yaslanma</td><td>Etek, yırtmaç detayı</td><td>Sepet Çanta</td><td>Sert gölge</td><td>Sabit</td><td>Post: "Alaçatı mavisi"</td></tr>
+                        <tr><td>12</td><td>Rüzgarla Sınav</td><td>Sahil Yolu</td><td>Boydan</td><td>Uçan pareoyu tutma</td><td>Rüzgarda savrulan</td><td>Şapka tutan el</td><td>Açık güneş</td><td>Sabit, rüzgar hızı</td><td>Reels: "Rüzgarla dansım"</td></tr>
+                        <tr><td>13</td><td>Çantadan Çıkarma</td><td>Plaj Kumları</td><td>Detay</td><td>Çantadan çekip alma</td><td>Katlı halde çıkıyor</td><td>Plaj Havlusu</td><td>Öğlen</td><td>Makro çekim (Yakın)</td><td>Story: "Çantamın demirbaşı"</td></tr>
+                        <tr><td>14</td><td>Çiçekli Duvar</td><td>Begonvilli Sokak</td><td>Göğüsten</td><td>Çiçek koklama</td><td>Omuzda şal gibi</td><td>İnce kolye</td><td>İkindi</td><td>Yandan kaydırma</td><td>Post: "Renklerin uyumu"</td></tr>
+                        <tr><td>15</td><td>Valiz Hazırlığı</td><td>Yatak Üstü</td><td>Kuşbakışı</td><td>Valize katlayıp koyma</td><td>Katlanmış</td><td>Valiz + Şapka</td><td>Sabah oda ışığı</td><td>Yukarıdan sabit</td><td>Reels: "Valize ilk girenler"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-lg font-bold text-brand-800 mb-3 uppercase tracking-wider">MİNİ WRAP SHOT LIST (15 Fikir)</h3>
+            <div class="table-container mb-8">
+                <table>
+                    <thead><tr><th>No</th><th>Sahne Adı</th><th>Lokasyon</th><th>Kadraj</th><th>Poz/Hareket</th><th>Ürün Görünümü</th><th>Aksesuar</th><th>Işık</th><th>Video Hareketi</th><th>Story/Reels/Hook</th></tr></thead>
+                    <tbody>
+                        <tr><td>16</td><td>Çanta Detayı</td><td>Kahve Masası</td><td>Yakın plan</td><td>Çantayı sandalyeye asma</td><td>Çanta sapına fiyonk</td><td>Hasır Çanta</td><td>Şemsiye gölgesi</td><td>Kamerayı sabitle</td><td>Reels: "Çantanı 5 saniyede değiştir"</td></tr>
+                        <tr><td>17</td><td>Saça Bağlama</td><td>Otel Aynası</td><td>Omuzdan yukarı</td><td>Saça düğüm atma</td><td>Toka etrafında sarılı</td><td>Toka, tarak</td><td>Sabah aynada</td><td>Zoom in (Yavaşça)</td><td>Story: "Açık saç sıcağına çözüm"</td></tr>
+                        <tr><td>18</td><td>Belde Kemer</td><td>Taş Sokak Yürüyüş</td><td>Bel hizası</td><td>Karşıya yürüme</td><td>Jean şort üstünde</td><td>Jean Şort</td><td>Öğlen güneşi</td><td>Arkaya geri geri yürü</td><td>Reels: "Kemer yerine wrap"</td></tr>
+                        <tr><td>19</td><td>OOTD Büstiyer</td><td>Taş Duvar Önü</td><td>Dizden yukarı</td><td>Dik duruş, kameraya bak</td><td>Üst olarak bağlı</td><td>Yüksek bel şort</td><td>İkindi</td><td>Aşağıdan yukarı</td><td>Post: "Bugünün starı wrap"</td></tr>
+                        <tr><td>20</td><td>Bileklik Gibi</td><td>Scooter Direksiyon</td><td>Sadece eller</td><td>Direksiyon tutma</td><td>Bileğe dolanmış</td><td>Yüzükler</td><td>Akşamüstü</td><td>Eller üzerinde sabit</td><td>Story: "Minik detaylar"</td></tr>
+                        <tr><td>21</td><td>Boyun Bandı</td><td>Rüzgarlı Sokak</td><td>Boyun detayı</td><td>Saç uçuşurken</td><td>İnce fular gibi</td><td>Güneş Gözlüğü</td><td>Yandan ışık</td><td>Yandan çekim</td><td>Post: "Vintage rüzgarı"</td></tr>
+                        <tr><td>22</td><td>Şapkada Wrap</td><td>Plaj Şezlong</td><td>Sadece Şapka</td><td>Şapkayı kafaya takma</td><td>Şapka etrafında şerit</td><td>Hasır Şapka</td><td>Öğlen</td><td>Şapkaya zoom</td><td>Reels: "Sıradan şapkayı tasarıma çevir"</td></tr>
+                        <tr><td>23</td><td>Ayna Şovu</td><td>Otel Asansörü</td><td>Tam boy selfie</td><td>Aynadan çekim</td><td>Bele bağlı kemer</td><td>Telefon</td><td>Asansör</td><td>Ayna selfisi (Titrek)</td><td>Story: "Çıkıyoruz!"</td></tr>
+                        <tr><td>24</td><td>Bavul Üstünde</td><td>Araba Bagajı</td><td>Detay</td><td>Valiz fermuarını çekme</td><td>Valiz kulpunda bağlı</td><td>Renkli Valiz</td><td>Sabah serin</td><td>Yukarıdan</td><td>Reels: "Tatil başlıyor"</td></tr>
+                        <tr><td>25</td><td>Kitap Okurken</td><td>Balkon</td><td>Yakın plan</td><td>Sayfa çevirme</td><td>Bilekte</td><td>Kalın bir kitap</td><td>Gün batımı gölge</td><td>Sayfaya odaklan</td><td>Post: "Sakin anlar"</td></tr>
+                        <tr><td>26</td><td>Dondurma Keyfi</td><td>Çarşı İçi</td><td>Göğüs hizası</td><td>Dondurma yeme</td><td>Boyunda şık fular</td><td>Dondurma Külahı</td><td>Akşam loş ışık</td><td>Karşıdan net</td><td>Story: "Tatlı molası"</td></tr>
+                        <tr><td>27</td><td>Hazırlık Hızı</td><td>Yatak Üstü</td><td>Kuşbakışı</td><td>Üstten atma</td><td>Katlı düz</td><td>Diğer takılar</td><td>Oda pencere</td><td>Hızlı kesme (Cut)</td><td>Reels: "Detaylar stili belirler"</td></tr>
+                        <tr><td>28</td><td>Rüzgarlı Portre</td><td>Marina/Sahil</td><td>Portre</td><td>Rüzgara karşı bakış</td><td>Saçta uçuşuyor</td><td>Büyük gözlük</td><td>Golden Hour</td><td>Sabit portre modu</td><td>Post: "Rüzgarla gelen"</td></tr>
+                        <tr><td>29</td><td>Çanta İçi</td><td>Kafe Masası</td><td>Kuşbakışı</td><td>Çantaya sokuşturma</td><td>Buruşuk ama düzgün</td><td>Hasır/Bez Çanta</td><td>Gölge</td><td>Yukarıdan netlik</td><td>Story: "Sığar mı sığar"</td></tr>
+                        <tr><td>30</td><td>Plaj Dönüşü</td><td>Kumlu Yol</td><td>Ayak/Bel hizası</td><td>Yürüme (Arkadan)</td><td>Şort kemerinden sarkar</td><td>Plaj terliği</td><td>Sıcak ikindi</td><td>Ayaklara takip</td><td>Reels: "Günün yorgunluğu"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-lg font-bold text-brand-800 mb-3 uppercase tracking-wider">BANDANA SHOT LIST (15 Fikir)</h3>
+            <div class="table-container mb-8">
+                <table>
+                    <thead><tr><th>No</th><th>Sahne Adı</th><th>Lokasyon</th><th>Kadraj</th><th>Poz/Hareket</th><th>Ürün Görünümü</th><th>Aksesuar</th><th>Işık</th><th>Video Hareketi</th><th>Story/Reels/Hook</th></tr></thead>
+                    <tbody>
+                        <tr><td>31</td><td>Klasik Saç Bandı</td><td>Beyaz Duvar Önü</td><td>Portre</td><td>Kameraya tebessüm</td><td>Başta tam açık</td><td>Halka küpe</td><td>Sabah sert ışık</td><td>Hafif yaklaşma</td><td>Reels: "Saçım bozulunca ben"</td></tr>
+                        <tr><td>32</td><td>Çanta Süsü</td><td>Limonata Masası</td><td>Masa hizası</td><td>Bardağı tutarken</td><td>Çanta sapında düğüm</td><td>Limonata</td><td>Şemsiye gölgesi</td><td>Odak kaydırma (Focus)</td><td>Story: "Detaylara düşenler"</td></tr>
+                        <tr><td>33</td><td>Korsan Stili</td><td>Scooter Yanı</td><td>Göğüs üstü</td><td>Gözlük düzeltme</td><td>Başta arkadan bağlı</td><td>Koyu Gözlük</td><td>İkindi sıcak</td><td>Aşağıdan</td><td>Post: "Tam tatil modu"</td></tr>
+                        <tr><td>34</td><td>Bilekte Bandana</td><td>Otel Balkonu</td><td>Bilek detayı</td><td>Çay/Kahve bardağı</td><td>Bileğe kalın sarılı</td><td>Kahve Fincanı</td><td>Sabah yumuşak</td><td>Sabit detay</td><td>Story: "Günaydın kahvesi"</td></tr>
+                        <tr><td>35</td><td>Boyunda Fular</td><td>Çarşı Akşamı</td><td>Belden yukarı</td><td>Etrafa bakarak yürüme</td><td>Boyunda ince katlanmış</td><td>Hasır omuz çanta</td><td>Sokak lambası</td><td>Önden geri geri git</td><td>Reels: "Gece yürüyüşleri"</td></tr>
+                        <tr><td>36</td><td>Şapka Altı</td><td>Plaj Kumu</td><td>Portre (Yukarıdan)</td><td>Yukarı kameraya bakış</td><td>Şapka altından sarkan</td><td>Büyük Şapka</td><td>Tepe ışığı (Parlak)</td><td>Kuşbakışı</td><td>Post: "Güneş koruması 2.0"</td></tr>
+                        <tr><td>37</td><td>Topuz Etrafında</td><td>Taş Duvar Önü</td><td>Omuz (Arkadan)</td><td>Arkaya dönük duruş</td><td>Dağınık topuza sarılı</td><td>Sırtı açık bluz</td><td>Yan gölge</td><td>Sabit</td><td>Story: "En sevdiğim saç modeli"</td></tr>
+                        <tr><td>38</td><td>Araba Camında</td><td>Yolculuk (Araba)</td><td>Camdan dışarı</td><td>Rüzgarda savurma</td><td>Elde uçuşan</td><td>Araba aynası</td><td>Güneşli</td><td>Dışarıyı çeken el</td><td>Reels: "Yol şarkıları"</td></tr>
+                        <tr><td>39</td><td>Çarşı Alışverişi</td><td>Butik Önü</td><td>Tam boy</td><td>Poşet taşıma</td><td>Boyunda şık duruş</td><td>Alışveriş poşeti</td><td>Akşamüstü</td><td>Yandan yürüyüş takip</td><td>Story: "Biraz turluyoruz"</td></tr>
+                        <tr><td>40</td><td>Valiz Üstü</td><td>Yatak</td><td>Kuşbakışı</td><td>Seçim yapma (Anket)</td><td>Katlı</td><td>Şort, Gözlük</td><td>Oda</td><td>Üstten</td><td>Story: "Bugün hangisini takayım?"</td></tr>
+                        <tr><td>41</td><td>Rüzgarda Uçuş</td><td>Sahil Kayalık</td><td>Boydan yukarı</td><td>Saçı tutma</td><td>Başta, uçları uçuşan</td><td>Kot Ceket</td><td>Golden Hour</td><td>Etrafında yarım tur</td><td>Reels: "Rüzgarla imtihan"</td></tr>
+                        <tr><td>42</td><td>Kahve Yanı</td><td>Kafe Masası</td><td>Flatlay</td><td>Masada duruş</td><td>Gözlükle yan yana</td><td>Dergi, Gözlük</td><td>Dağınık gölge</td><td>Yukardan zoom in</td><td>Post: "Pazar detayları"</td></tr>
+                        <tr><td>43</td><td>Şortun Kemeri</td><td>Begonvilli Sokak</td><td>Bel detayı</td><td>Ceplere el sokma</td><td>Kemer köprüsüne bağlı</td><td>Kot Şort</td><td>Parlak ikindi</td><td>Bele yakın çekim</td><td>Story: "Küçük hileler"</td></tr>
+                        <tr><td>44</td><td>Ayna Karşısı</td><td>Otel Banyo Aynası</td><td>Yüz ve ayna</td><td>Aynada bağlarken</td><td>Elde, bağlanıyor</td><td>Ruj</td><td>İç mekan (Sarı)</td><td>Telefonla aynaya zoom</td><td>Reels: "Hazırlanırken favori adımım"</td></tr>
+                        <tr><td>45</td><td>Gün Batımı Veda</td><td>Ahşap İskele</td><td>Silüet</td><td>Deniz izleme</td><td>Saçta silüet</td><td>Yok</td><td>Gün Batımı</td><td>Arkadan yavaşça yanaş</td><td>Post: "Günün özeti"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-lg font-bold text-brand-800 mb-3 uppercase tracking-wider">ŞORT GÖMLEK TAKIM SHOT LIST (15 Fikir)</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>No</th><th>Sahne Adı</th><th>Lokasyon</th><th>Kadraj</th><th>Poz/Hareket</th><th>Ürün Görünümü</th><th>Aksesuar</th><th>Işık</th><th>Video Hareketi</th><th>Story/Reels/Hook</th></tr></thead>
+                    <tbody>
+                        <tr><td>46</td><td>Çabasız Sabah</td><td>Çarşı Sokak</td><td>Tam Boy</td><td>Kahve elinde yürüme</td><td>Gömlek önü açık, şort</td><td>Karton Kahve</td><td>Sabah serinliği</td><td>Önden yürüme (Sabit)</td><td>Reels: "Kahve almaya inerken"</td></tr>
+                        <tr><td>47</td><td>Kahvaltı Masası</td><td>Otel Bahçesi</td><td>Belden yukarı</td><td>Oturarak sohbet</td><td>Gömlek ilikli</td><td>Portakal Suyu</td><td>Ağaç gölgesi</td><td>Yandan sabit</td><td>Post: "En sevdiğim öğün"</td></tr>
+                        <tr><td>48</td><td>Sadece Gömlek</td><td>Plaj</td><td>Dizden yukarı</td><td>Şortsuz, mayo üstüne</td><td>Önü açık, rüzgarda</td><td>Mayo / Bikini</td><td>Öğlen</td><td>Aşağıdan yukarı</td><td>Story: "Plaj gömleği görevinde"</td></tr>
+                        <tr><td>49</td><td>Sadece Şort</td><td>Taş Ev Duvarı</td><td>Tam boy</td><td>Duvara yaslanma</td><td>Başka tişörtle kombin</td><td>Basic Tişört</td><td>İkindi güçlü</td><td>Geniş açı</td><td>Reels: "Takımı ayırarak kullanmak"</td></tr>
+                        <tr><td>50</td><td>Akşam Gezmesi</td><td>Marina</td><td>Tam boy</td><td>Yavaş adımlarla</td><td>Gömlek önü yarı ilikli</td><td>İnce zincir kolye</td><td>Golden hour</td><td>Kameraya doğru yavaşça</td><td>Post: "Akşam serinliği"</td></tr>
+                        <tr><td>51</td><td>Valize At Çık</td><td>Araba Bagajı</td><td>Yarım boy</td><td>Valize koyarken</td><td>Katlanmış takım</td><td>Bez çanta</td><td>Sabah gölgesi</td><td>Yukardan</td><td>Story: "Tatil üniformam hazır"</td></tr>
+                        <tr><td>52</td><td>Bisiklet Turu</td><td>Bisiklet Üstü</td><td>Tam boy</td><td>Pedallarken</td><td>Gömlek havalanır</td><td>Bisiklet</td><td>Yan güneş</td><td>Yandan takip</td><td>Reels: "Rüzgarı hisset"</td></tr>
+                        <tr><td>53</td><td>Ayna Hazırlığı</td><td>Otel Odası</td><td>Omuzdan aşağı</td><td>Ayna önü düğüm atma</td><td>Gömlek bele bağlanmış</td><td>Telefon</td><td>Pencere</td><td>Ayna selfisi (Zoomlu)</td><td>Story: "Hazır mıyız?"</td></tr>
+                        <tr><td>54</td><td>Dondurma Beklerken</td><td>Çarşı İçi</td><td>Dizden yukarı</td><td>Etrafı izleme</td><td>Şort ceplerine el sok.</td><td>Dondurma</td><td>Akşam sokak lambası</td><td>Odak net, arka flu</td><td>Post: "Çarşı klasiği"</td></tr>
+                        <tr><td>55</td><td>Kitap ve Gölge</td><td>Şezlong</td><td>Detay (Sadece Bacak)</td><td>Uzanırken</td><td>Sadece şort kısmı</td><td>Kitap + Güneş kr.</td><td>Öğlen şemsiye altı</td><td>Sabit</td><td>Story: "Dinlenme modu"</td></tr>
+                        <tr><td>56</td><td>Kapı Eşiği</td><td>Mavi Kapı</td><td>Tam boy</td><td>Basamakta oturma</td><td>Takım tam görünüyor</td><td>Hasır Şapka</td><td>Sert gölge çizgi</td><td>Karşıdan sabit</td><td>Post: "Alaçatı renkleri"</td></tr>
+                        <tr><td>57</td><td>Rüzgarlı İskele</td><td>Ahşap İskele</td><td>Tam boy</td><td>Denize bakma (Arka)</td><td>Gömlek uçuşuyor</td><td>Hasır omuz çanta</td><td>Gün batımı ters</td><td>Arkadan yavaşça yaklaş</td><td>Reels: "Tatilin sesi"</td></tr>
+                        <tr><td>58</td><td>Hızlı Değişim</td><td>Beyaz Duvar</td><td>Tam boy (Geçişli)</td><td>Parmak şıklatma</td><td>Ev Hali -> Takım Hali</td><td>Gözlük takma</td><td>Sabit Işık (Öğlen)</td><td>Aynı açıda kesme</td><td>Reels: "1 saniyede tatile ışınlan"</td></tr>
+                        <tr><td>59</td><td>Kafe Sohbeti</td><td>Çiçekli Kafe</td><td>Belden Yukarı</td><td>Gülerek konuşma</td><td>Yakın plan detay</td><td>Renkli içecek</td><td>Yumuşak İkindi</td><td>Yandan hafif pan</td><td>Story: "Günün dedikoduları"</td></tr>
+                        <tr><td>60</td><td>Merdivenden İniş</td><td>Taş Merdiven</td><td>Tam boy</td><td>Aşağı doğru adımlama</td><td>Takımın dökümlü duruşu</td><td>Sandalet</td><td>Sabah</td><td>Aşağıdan çekim (Uzun gösterir)</td><td>Post: "Yeni güne"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">H. PINTEREST MOODBOARD BÖLÜMÜ</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Pareo Moodboard -->
+                <div class="card bg-gray-50">
+                    <h3 class="font-bold text-brand-900 mb-2 border-b pb-2">1. Pareo Moodboard</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Referans Hissi:</strong> Uçuşan hafif kumaşlar</li>
+                        <li><strong>Renk Paleti:</strong> Kum rengi, gün batımı turuncusu, mavi</li>
+                        <li><strong>Poz/Kadraj:</strong> Arkası dönük rüzgara karşı, Tam boy aşağıdan</li>
+                        <li><strong>Mekan/Aksesuar:</strong> Plaj, ahşap iskele, Hasır şapka</li>
+                        <li><strong>Jutsack'e Uyarlama:</strong> Doğal'ın samimi gülüşüyle uçuşan kumaşı birleştirmek.</li>
+                        <li class="bg-white p-2 rounded italic text-brand-700 border border-brand-200 mt-2"><strong>Fotoğrafçıya Not:</strong> Kumaş hareketini yakala. Güneşi arkaya alıp pareonun içinden süzülen ışığı çek.</li>
+                    </ul>
+                </div>
+                
+                <!-- Wrap Moodboard -->
+                <div class="card bg-gray-50">
+                    <h3 class="font-bold text-brand-900 mb-2 border-b pb-2">2. Mini Wrap Moodboard</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Referans Hissi:</strong> Yakın plan estetik detay, "sessiz lüks"</li>
+                        <li><strong>Renk Paleti:</strong> Beyaz mermer, ahşap, ten rengi</li>
+                        <li><strong>Poz/Kadraj:</strong> Ayna karşısı bağlama, çanta detayı</li>
+                        <li><strong>Mekan/Aksesuar:</strong> Banyo aynası, kafe masası, Kalın zincir kolye</li>
+                        <li><strong>Jutsack'e Uyarlama:</strong> Wrap'in farklı bağlanma şekillerini çok yakın plan (makro) çekerek göstermek.</li>
+                        <li class="bg-white p-2 rounded italic text-brand-700 border border-brand-200 mt-2"><strong>Fotoğrafçıya Not:</strong> Ürünün düğüm/bağlanma şeklini mutlaka netleştir. Arka planı flu yap (Portre modu).</li>
+                    </ul>
+                </div>
+
+                <!-- Bandana Moodboard -->
+                <div class="card bg-gray-50">
+                    <h3 class="font-bold text-brand-900 mb-2 border-b pb-2">3. Bandana Moodboard</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Referans Hissi:</strong> 90'lar yaz estetiği, nostaljik</li>
+                        <li><strong>Renk Paleti:</strong> Taş rengi, begonvil pembesi, mavi gökyüzü</li>
+                        <li><strong>Poz/Kadraj:</strong> Saçlar uçuşurken gülümseme, Portre</li>
+                        <li><strong>Mekan/Aksesuar:</strong> Çarşı sokağı, scooter yanı, Vintage gözlük</li>
+                        <li><strong>Jutsack'e Uyarlama:</strong> Doğal'ın karakteristik saçlarıyla bandananın uyumunu vurgulamak.</li>
+                        <li class="bg-white p-2 rounded italic text-brand-700 border border-brand-200 mt-2"><strong>Fotoğrafçıya Not:</strong> Öğlen sert güneşte çekme, yüzünde gölge olmasın. Bandananın deseni net seçilsin.</li>
+                    </ul>
+                </div>
+
+                <!-- Takım Moodboard -->
+                <div class="card bg-gray-50">
+                    <h3 class="font-bold text-brand-900 mb-2 border-b pb-2">4. Şort Gömlek Takım Moodboard</h3>
+                    <ul class="text-sm space-y-2 text-gray-700">
+                        <li><strong>Referans Hissi:</strong> Çabasız şık, "old money" yazlık</li>
+                        <li><strong>Renk Paleti:</strong> Beyaz badana, zeytin yeşili, taş</li>
+                        <li><strong>Poz/Kadraj:</strong> Yürüyüş anı (yakalanmış), kahve yudumlama</li>
+                        <li><strong>Mekan/Aksesuar:</strong> Taş sokaklar, kahve dükkanı, Deri sandalet</li>
+                        <li><strong>Jutsack'e Uyarlama:</strong> Doğal'ı sokakta yürürken arkadan/önden hareketli çekmek.</li>
+                        <li class="bg-white p-2 rounded italic text-brand-700 border border-brand-200 mt-2"><strong>Fotoğrafçıya Not:</strong> Çok kalabalık arka plan kullanma. Kumaşın dökümünü, salaş duruşunu göstermek için yürürken çek.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">I. ÇEKİM AKIŞI ALTERNATİFLERİ</h2>
+            
+            <h3 class="font-bold text-brand-900 mt-4 mb-2">1 Günlük Yoğun Çekim Akışı</h3>
+            <div class="table-container mb-6">
+                <table>
+                    <thead><tr><th>Saat</th><th>Lokasyon</th><th>Ürün</th><th>Sahne</th><th>Çekilecek İçerik</th><th>Not</th></tr></thead>
+                    <tbody>
+                        <tr><td>07:00-09:30</td><td>Taş Sokak/Çarşı</td><td>Takım, Bandana</td><td>Kahve, yürüyüş</td><td>2 Reels, 3 Post, Storyler</td><td>Çarşı boşken geniş açı çekilir.</td></tr>
+                        <tr><td>11:00-13:00</td><td>Otel Odası/Kafe</td><td>Mini Wrap, Bandana</td><td>Ayna, detay, çanta</td><td>1 Reels, 2 Post, Detay</td><td>Güneş dikken gölgede detay çekilir.</td></tr>
+                        <tr><td>15:00-17:00</td><td>Plaj/Havuz</td><td>Pareo, Şort (Takım)</td><td>Şezlong, kumsal</td><td>2 Reels, 3 Post, Storyler</td><td>Pareo uçuşmaları, plaj hissi.</td></tr>
+                        <tr><td>18:00-20:00</td><td>İskele/Marina</td><td>Pareo, Takım</td><td>Gün batımı, yürüyüş</td><td>1 Reels, 2 Post (Golden Hour)</td><td>En iyi ışık, yavaş videolar çekilecek.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-brand-900 mt-4 mb-2">2 Günlük Rahat Çekim Akışı</h3>
+            <p class="text-sm mb-2 font-medium">Gün 1: Pareo & Şort Takım (Büyük parçalar)</p>
+            <div class="table-container mb-4">
+                <table>
+                    <thead><tr><th>Saat</th><th>Lokasyon</th><th>Ürün</th><th>Sahne</th><th>Çekilecek İçerik</th><th>Not</th></tr></thead>
+                    <tbody>
+                        <tr><td>08:00-10:00</td><td>Çarşı</td><td>Takım</td><td>Sabah kahvesi, yürüyüş</td><td>Reels + Post + Story</td><td>Sokaklar boşken.</td></tr>
+                        <tr><td>16:00-18:30</td><td>Plaj/Beach</td><td>Pareo</td><td>Plajdan akşama geçiş</td><td>Geçiş Reels'leri, Post</td><td>Pareonun rüzgarla uyumu.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm mb-2 font-medium">Gün 2: Mini Wrap & Bandana (Detay parçalar)</p>
+            <div class="table-container mb-6">
+                <table>
+                    <thead><tr><th>Saat</th><th>Lokasyon</th><th>Ürün</th><th>Sahne</th><th>Çekilecek İçerik</th><th>Not</th></tr></thead>
+                    <tbody>
+                        <tr><td>11:00-14:00</td><td>Otel / Kafe</td><td>Wrap & Bandana</td><td>Ayna, bağlama şekilleri, çanta</td><td>Detay Reels, Yakın çekim postlar</td><td>Tamamen gölge / iç mekan.</td></tr>
+                        <tr><td>17:30-19:30</td><td>Taş Duvar / Kapı</td><td>İkisi</td><td>Portreler, OOTD</td><td>Golden hour portre çekimleri</td><td>Detay parçaların kombin gücü.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-brand-900 mt-4 mb-2">3 Günlük Organik Tatil Akışı</h3>
+            <div class="bg-brand-50 border border-brand-200 p-4 rounded-lg text-sm space-y-3">
+                <p><strong>Gün 1 (Yol & Yerleşme):</strong> Odada valiz hazırlığı (Wrap, Bandana), akşamüstü kahvesi (Takım). (09:00 ve 17:00 çekimleri)</p>
+                <p><strong>Gün 2 (Tam Gün Plaj):</strong> Plaja iniş, şezlongda yatış, gün batımında iskele (Sadece Pareo ve Wrap plaj kullanımı). (12:00 ve 19:30 çekimleri)</p>
+                <p><strong>Gün 3 (Şehir & Dönüş):</strong> Çarşıda gezinti, dondurma (Takım, Bandana). Dönüş yolunda araba içi. (10:00 ve 18:00 çekimleri)</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">J. STORY SATIŞ AKIŞI (5 Adımlı Huni)</h2>
+
+            <div class="space-y-8">
+                <!-- Pareo Story -->
+                <div>
+                    <h3 class="font-bold text-brand-900 mb-2">1. Pareo Satış Akışı</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Story No</th><th>Amaç</th><th>Görsel</th><th>Ekran Yazısı</th><th>Doğal’ın Cümlesi</th><th>Sticker / Eylem</th><th>CTA</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Dikkat Çekme</td><td>Kumsalda pareo ile yürüyüş videosu.</td><td>Rüzgar = Pareo</td><td>"Bu rüzgarı bekliyordum pareomla şov yapmak için"</td><td>-</td><td>-</td></tr>
+                                <tr><td>2</td><td>Sorun/Çözüm</td><td>Pareoyu etek gibi bağlama detay videosu.</td><td>Etek mi Pareo mu?</td><td>"Plajdan direkt yemeğe geçerken hayat kurtarıyor"</td><td>Anket: Plaj/Yemek</td><td>-</td></tr>
+                                <tr><td>3</td><td>Ürün Faydası</td><td>Yakın plan kumaş dokusu fotosu.</td><td>Efil efil</td><td>"Kumaşı o kadar hafif ki üstünüzde yok gibi"</td><td>-</td><td>-</td></tr>
+                                <tr><td>4</td><td>Satış/FOMO</td><td>Ayna karşısında son kez gösterirken.</td><td>Sorduğunuz desen</td><td>"Çok mesaj geldi, stoklar azmış, bendeki bu renk"</td><td>Link Sticker</td><td>Kapın</td></tr>
+                                <tr><td>5</td><td>Sosyal Kanıt</td><td>Pareoyla gün batımında şık bir foto.</td><td>Tatil kurtarıcısı</td><td>"Bir tane alın, bütün yaz rahat edin"</td><td>-</td><td>Web sitesi</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Wrap Story -->
+                <div>
+                    <h3 class="font-bold text-brand-900 mb-2">2. Mini Wrap Satış Akışı</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Story No</th><th>Amaç</th><th>Görsel</th><th>Ekran Yazısı</th><th>Doğal’ın Cümlesi</th><th>Sticker / Eylem</th><th>CTA</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>İlgi Uyandırma</td><td>Çantaya bağlı wrap fotosu.</td><td>Detay</td><td>"Çantamı 5 saniyede değiştirdim"</td><td>Emoji Slider (Ateş)</td><td>-</td></tr>
+                                <tr><td>2</td><td>Eğitim</td><td>Belde kemer gibi kullanma videosu.</td><td>Kemer yerine</td><td>"Sadece çantaya değil, belime de bağlıyorum"</td><td>-</td><td>-</td></tr>
+                                <tr><td>3</td><td>Çözüm</td><td>Bavulda minicik durduğunu gösteren foto.</td><td>Yer kaplamaz</td><td>"Valizde kapladığı yer bu kadar ama işlevi dev"</td><td>-</td><td>-</td></tr>
+                                <tr><td>4</td><td>Yönlendirme</td><td>İki farklı renk wrap anketi.</td><td>Sizce hangisi?</td><td>"Akşama hangisini üst olarak giyeyim?"</td><td>Anket (Mavi/Bej)</td><td>Kombin seç</td></tr>
+                                <tr><td>5</td><td>Satış/Link</td><td>Kazananı giymiş halde selfie.</td><td>İşte sonuç</td><td>"Sizin seçiminizi giydim, bu arada linkini de bıraktım"</td><td>Link Sticker</td><td>Linkte</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bandana Story -->
+                <div>
+                    <h3 class="font-bold text-brand-900 mb-2">3. Bandana Satış Akışı</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Story No</th><th>Amaç</th><th>Görsel</th><th>Ekran Yazısı</th><th>Doğal’ın Cümlesi</th><th>Sticker / Eylem</th><th>CTA</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Günlük Hayat</td><td>Dağınık saçla kahve içerken video.</td><td>Saçlar isyanda</td><td>"Rüzgardan saçlarım açılınca ben"</td><td>-</td><td>-</td></tr>
+                                <tr><td>2</td><td>Sihirli Dokunuş</td><td>Bandanayı taktıktan sonraki portre.</td><td>Kurtarıcı devrede</td><td>"Neyse ki yanımdan ayırmadığım bandanam var"</td><td>-</td><td>-</td></tr>
+                                <tr><td>3</td><td>Stil Önerisi</td><td>Boyna fular gibi takılmış 2. bir foto.</td><td>Sadece saça değil</td><td>"Boynumda da efsane durmuyor mu?"</td><td>-</td><td>-</td></tr>
+                                <tr><td>4</td><td>Karar/Anket</td><td>Saç vs Boyun yan yana kolaj.</td><td>Nerede sevdiniz?</td><td>"Sizce saçta mı daha iyi, boyunda mı?"</td><td>Anket (Saç/Boyun)</td><td>Fikrini söyle</td></tr>
+                                <tr><td>5</td><td>CTA/Satış</td><td>En sevdiği deseni elinde tuttuğu foto.</td><td>Favorim</td><td>"Renk seçenekleri çok tatlı, tükenmeden bir bakın"</td><td>Link Sticker</td><td>İnceleyin</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Takım Story -->
+                <div>
+                    <h3 class="font-bold text-brand-900 mb-2">4. Şort Gömlek Takım Satış Akışı</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Story No</th><th>Amaç</th><th>Görsel</th><th>Ekran Yazısı</th><th>Doğal’ın Cümlesi</th><th>Sticker / Eylem</th><th>CTA</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Gün Başlangıcı</td><td>Sabah aynada takımla poz.</td><td>Günün üniforması</td><td>"Ne giysem derdine son verdiğim o takım"</td><td>-</td><td>-</td></tr>
+                                <tr><td>2</td><td>Çabasızlık</td><td>Kafede otururken çekilmiş dışardan video.</td><td>Çabasız</td><td>"Kumaşı terletmiyor, Alaçatı sıcağında test edildi"</td><td>-</td><td>-</td></tr>
+                                <tr><td>3</td><td>Versatilite</td><td>Sadece gömleğini mayoyla gösterdiği foto.</td><td>Üstüne at çık</td><td>"Gömleğini plaja inerken mayonun üstüne de atıyorum"</td><td>-</td><td>-</td></tr>
+                                <tr><td>4</td><td>Uyarı/FOMO</td><td>Yürürken takımın tam boy göründüğü video.</td><td>Son adetler olabilir</td><td>"Sorular birikmiş, takım Jutsack'ten kızlar."</td><td>Link Sticker</td><td>Son stoklar</td></tr>
+                                <tr><td>5</td><td>Arkadaş Tav.</td><td>Akşam aynı takımla şık bir ayna selfisi.</td><td>Gündüzden geceye</td><td>"Akşam da takıları değiştirip bununla çıkıyorum. Net tavsiyemdir"</td><td>-</td><td>İncele</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">K. REELS SENARYOLARI (24 Fikir)</h2>
+
+            <h3 class="font-bold text-brand-900 mb-2 uppercase text-sm">Pareo Reels (6 Fikir)</h3>
+            <div class="table-container mb-6">
+                <table>
+                    <thead><tr><th>No</th><th>Ürün</th><th>Reels Başlığı</th><th>İlk 3 Saniye Hook</th><th>Sahne Akışı</th><th>Kamera Hareketi</th><th>Ekran Yazısı</th><th>Müzik Hissi</th><th>CTA</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Pareo</td><td>Plajdan Akşama</td><td>"Bir pareoyla günü kurtarıyoruz."</td><td>Plaj hali -> Parmak şıklatma -> Etek/Şık hali</td><td>Sabit, cut geçiş</td><td>1 Pareo 2 Hayat</td><td>Lo-fi chill</td><td>Kaydet, lazım olur</td></tr>
+                        <tr><td>2</td><td>Pareo</td><td>Rüzgar Dansı</td><td>(Sessiz, sadece rüzgar sesi ve uçuşma)</td><td>Uçuşan kumaşın içinden Doğal'ın gülümsemesi</td><td>Aşağıdan yukarı pan</td><td>Alaçatı rüzgarı</td><td>Enstrümantal</td><td>Yaza ekle</td></tr>
+                        <tr><td>3</td><td>Pareo</td><td>3 Bağlama Şekli</td><td>"Pareo sadece bele bağlanmaz, izleyin."</td><td>Boyun -> Bel -> Omuz (hızlı gösterim)</td><td>Sabit eğitim açısı</td><td>Şekil 1, 2, 3</td><td>Hızlı beat, ritmik</td><td>Favorin hangisi?</td></tr>
+                        <tr><td>4</td><td>Pareo</td><td>Golden Hour</td><td>"Günün en sevdiğim saati ve parçası."</td><td>Silüet -> Dönüş -> Işıkta kumaş</td><td>Model etrafında dön</td><td>Yaz akşamları</td><td>Slow, duygusal</td><td>Hissi yakala</td></tr>
+                        <tr><td>5</td><td>Pareo</td><td>Valiz Hilesi</td><td>"Bavula ilk ne koyuyorum?"</td><td>Boş valiz -> Pareoyu atar -> Kapanır</td><td>Kuşbakışı zoom</td><td>Yer kaplamaz</td><td>Tatlı, eğlenceli</td><td>Tatil valizine at</td></tr>
+                        <tr><td>6</td><td>Pareo</td><td>Etek Olarak</td><td>"Bunu etek sandınız biliyorum."</td><td>Sokakta yürürken eteği açıp pareo olduğunu gösterir</td><td>Arkadan takip</td><td>Hayır, etek değil</td><td>Pop, trend</td><td>Link bio'da</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-brand-900 mb-2 uppercase text-sm">Mini Wrap Reels (6 Fikir)</h3>
+            <div class="table-container mb-6">
+                <table>
+                    <thead><tr><th>No</th><th>Ürün</th><th>Reels Başlığı</th><th>İlk 3 Saniye Hook</th><th>Sahne Akışı</th><th>Kamera Hareketi</th><th>Ekran Yazısı</th><th>Müzik Hissi</th><th>CTA</th></tr></thead>
+                    <tbody>
+                        <tr><td>7</td><td>Wrap</td><td>Çanta Hack'i</td><td>"Sıkıcı çantaları 5 saniyede değiştiriyoruz."</td><td>Düz çanta -> Wrap bağlama -> Havalı çanta</td><td>Yakın plan detay</td><td>Küçük dokunuş</td><td>R&B, groovy</td><td>Sende dene</td></tr>
+                        <tr><td>8</td><td>Wrap</td><td>Büstiyer Yaptım</td><td>"Mini wrap'ten büstiyer olur mu? Oldu."</td><td>Wrap'i göğse sarıp arkadan bağlama</td><td>Ayna selfisi</td><td>Üstümdeki aslında</td><td>Hareketli pop</td><td>Kombine dahil et</td></tr>
+                        <tr><td>9</td><td>Wrap</td><td>Kemer Yerine</td><td>"Kemer takmayı sevmeyenler toplanın."</td><td>Kot şorta wrap dolama</td><td>Bel hizası zoom in</td><td>Kemer yerine wrap</td><td>Akustik gitar</td><td>Tıkla, incele</td></tr>
+                        <tr><td>10</td><td>Wrap</td><td>Toka Niyetine</td><td>"Saçlar açık kalınca terleyenler derneği."</td><td>Saçı toplayıp etrafına wrap sarma</td><td>Omuzdan yukarı</td><td>Saç kurtarıcısı</td><td>Yaz hiti</td><td>Tarzına ekle</td></tr>
+                        <tr><td>11</td><td>Wrap</td><td>Bilekte Detay</td><td>"Bugünün takısı Jutsack'ten."</td><td>Kahve içerken bilekteki wrap detayı</td><td>Masa üstü yavaş pan</td><td>Detayları sev</td><td>Chill cafe müziği</td><td>Sepete at</td></tr>
+                        <tr><td>12</td><td>Wrap</td><td>Çok Amaçlı</td><td>"Valizdeki en küçük ama en işlevsel parça."</td><td>4 farklı kullanımın yarım saniyelik kolajı</td><td>Hızlı geçişler (Cut)</td><td>1 parça 4 stil</td><td>Trend beat</td><td>Hemen incele</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-brand-900 mb-2 uppercase text-sm">Bandana Reels (6 Fikir)</h3>
+            <div class="table-container mb-6">
+                <table>
+                    <thead><tr><th>No</th><th>Ürün</th><th>Reels Başlığı</th><th>İlk 3 Saniye Hook</th><th>Sahne Akışı</th><th>Kamera Hareketi</th><th>Ekran Yazısı</th><th>Müzik Hissi</th><th>CTA</th></tr></thead>
+                    <tbody>
+                        <tr><td>13</td><td>Bandana</td><td>Rüzgarla İmtihan</td><td>"Alaçatı rüzgarına karşı tek silahım."</td><td>Saç uçar -> Bandanayı takar -> Gülümser</td><td>Göğüs üstü, sabit</td><td>Rüzgar: 0 Bandana: 1</td><td>Komik başlangıç -> Havalı</td><td>Bandananı seç</td></tr>
+                        <tr><td>14</td><td>Bandana</td><td>Nostalji</td><td>(Vintage filtre) Gözlük üstünden bakış.</td><td>Nostaljik pozlar, sokak yürüyüşü</td><td>Yavaş ve sinematik</td><td>90'lar yazı</td><td>Retro pop</td><td>Yaz stiline ekle</td></tr>
+                        <tr><td>15</td><td>Bandana</td><td>Boyun Fuları</td><td>"Takı takmak istemediğim o günlerde ben."</td><td>Boyna fular gibi bağlayıp kahve alma</td><td>Yan profil takip</td><td>Takı yerine</td><td>Sakin Fransızca</td><td>İncelemek için tıkla</td></tr>
+                        <tr><td>16</td><td>Bandana</td><td>Şapka Altı</td><td>"Hasır şapkaya level atlatıyoruz."</td><td>Şapkanın altına bağlayıp, şapkayı takma</td><td>Kuşbakışı -> Karşı</td><td>Şapka stili</td><td>Yazlık ritim</td><td>Kendi tarzını yarat</td></tr>
+                        <tr><td>17</td><td>Bandana</td><td>Hazırlanma</td><td>"Evden çıkmam tam 5 saniye sürüyor."</td><td>Ayna önü -> Bandana tak -> Gözlük tak -> Çık</td><td>Titrek ayna çekimi</td><td>5 saniyede hazır</td><td>Hızlı tempo</td><td>Pratik çözümler</td></tr>
+                        <tr><td>18</td><td>Bandana</td><td>Renk Seçimi</td><td>"Siz olsanız hangi rengi seçerdiniz?"</td><td>3 farklı renk bandanayı arka arkaya deneme</td><td>Aynı poz, cut geçiş</td><td>Seçim senin</td><td>Eğlenceli</td><td>Favorini yoruma yaz</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-brand-900 mb-2 uppercase text-sm">Şort Gömlek Takım Reels (6 Fikir)</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>No</th><th>Ürün</th><th>Reels Başlığı</th><th>İlk 3 Saniye Hook</th><th>Sahne Akışı</th><th>Kamera Hareketi</th><th>Ekran Yazısı</th><th>Müzik Hissi</th><th>CTA</th></tr></thead>
+                    <tbody>
+                        <tr><td>19</td><td>Takım</td><td>Çabasız Pazar</td><td>"Pazar sabahı kahveye inerken ne giyiyorum?"</td><td>Pijamadan -> Takıma geçiş (Zıplama efekti)</td><td>Sabit ayna</td><td>Çabasız pazar</td><td>Akustik chill</td><td>Üniformanı al</td></tr>
+                        <tr><td>20</td><td>Takım</td><td>Gündüz/Gece</td><td>"Bu takımı sadece gündüz giyerim sanmıştım."</td><td>Spor ayakkabılı -> Topuklu ve takılı hal</td><td>Yürüme, geçiş</td><td>Gündüzden Geceye</td><td>R&B geçişli</td><td>İki stili de dene</td></tr>
+                        <tr><td>21</td><td>Takım</td><td>Ayrı Kullanım</td><td>"Takım aldım ama hiç takım giymedim."</td><td>Sadece şort + tişört / Sadece gömlek + mayo</td><td>Göğüs hizası sabit</td><td>Ayrı ayrı giy</td><td>Pop, neşeli</td><td>Dolabını kurtar</td></tr>
+                        <tr><td>22</td><td>Takım</td><td>Alaçatı Sokakları</td><td>(Müzik ritmine göre adım atma)</td><td>Sokakta arkadan yürüyüş, takımı gösteriş</td><td>Arkadan Dolly (Takip)</td><td>Alaçatı üniforması</td><td>Trend Tiktok sesi</td><td>Sen de valize at</td></tr>
+                        <tr><td>23</td><td>Takım</td><td>Valiz Hazırlığı</td><td>"Tatile giderken düşünmeden valize attığım o parça."</td><td>Valize katlama -> Giyip bavulu çekme</td><td>Yukarıdan -> Karşıdan</td><td>Düşünmeden giy çık</td><td>Ritmik</td><td>Stok bitmeden yetiş</td></tr>
+                        <tr><td>24</td><td>Takım</td><td>Akşam Esintisi</td><td>"Akşam serinliği başlayınca takımın gücü."</td><td>Rüzgarda gömlek önü açık uçuşuyor</td><td>Aşağıdan yukarı</td><td>Akşamüstü serinliği</td><td>Slow, estetik</td><td>Yaz stiline tıkla</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">L. CAPTION BANKASI (60 Adet Eksiksiz)</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="card bg-brand-50">
+                    <h3 class="font-serif font-bold text-lg text-brand-900 border-b border-brand-200 pb-2 mb-4">Pareo (12 Adet)</h3>
+                    <ul class="text-sm text-gray-700 space-y-2 list-none">
+                        <li><span class="text-brand-500 font-bold mr-1">1.</span> Alaçatı rüzgarı ve favori pareom... Ayrılmaz ikiliyiz. 🌬️🤍</li>
+                        <li><span class="text-brand-500 font-bold mr-1">2.</span> Plajdan akşama geçişin en efil efil hali. Üstümdeki aslında pareo! 🤫</li>
+                        <li><span class="text-brand-500 font-bold mr-1">3.</span> Valizde sıfır yer, tatilde sonsuz fayda. Bir pareodan daha ne istenir? 🌊</li>
+                        <li><span class="text-brand-500 font-bold mr-1">4.</span> Gün batımı renklerine en çok bu deseni yakıştırdım. 🌅</li>
+                        <li><span class="text-brand-500 font-bold mr-1">5.</span> Bugün etek oldu, yarın belki büstiyer yaparım. Jutsack pareomla şekilden şekle giriyorum. ✨</li>
+                        <li><span class="text-brand-500 font-bold mr-1">6.</span> Uçuş uçuş hissini seviyorum, üstümde yokmuş gibi. 🕊️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">7.</span> Şezlongdan kalkıp yemeğe gitmem tam 2 saniye sürüyor. Pratikliğe aşığım. 🍹</li>
+                        <li><span class="text-brand-500 font-bold mr-1">8.</span> Rüzgarla dans eden kumaşlar ve bitmeyen yaz akşamları... 🌙</li>
+                        <li><span class="text-brand-500 font-bold mr-1">9.</span> Havuz kenarında kahve keyfi, tabii ki pareom omuzlarımda. ☕</li>
+                        <li><span class="text-brand-500 font-bold mr-1">10.</span> Rengine ayrı, kumaşına ayrı düştüm. Yaz bitmeden stoklayın derim. 🧿</li>
+                        <li><span class="text-brand-500 font-bold mr-1">11.</span> Bazen tek bir parça bütün tatili kurtarmaya yeter. 🏝️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">12.</span> Sorduğunuz o etek... Etek değil kızlar, linki story'de bıraktım! 🛍️</li>
+                    </ul>
+                </div>
+
+                <div class="card bg-brand-50">
+                    <h3 class="font-serif font-bold text-lg text-brand-900 border-b border-brand-200 pb-2 mb-4">Mini Wrap (12 Adet)</h3>
+                    <ul class="text-sm text-gray-700 space-y-2 list-none">
+                        <li><span class="text-brand-500 font-bold mr-1">13.</span> Çantamın sapına kondurduğum küçük bir dokunuş bütün havayı değiştirdi. 👜</li>
+                        <li><span class="text-brand-500 font-bold mr-1">14.</span> Saçım açık kalınca terliyorum diyenlere dev hizmet: Mini Wrap! 🎀</li>
+                        <li><span class="text-brand-500 font-bold mr-1">15.</span> Kemer takmayı sevmeyenler, şortun beline bunu bağlamayı denesin. Teşekkürleri sonra alırım. 😉</li>
+                        <li><span class="text-brand-500 font-bold mr-1">16.</span> Valizin en minik ama kombinin en iddialı parçası. 🌟</li>
+                        <li><span class="text-brand-500 font-bold mr-1">17.</span> Büstiyer olarak denedim, bence harika oldu. Sizce? 🦋</li>
+                        <li><span class="text-brand-500 font-bold mr-1">18.</span> Bileğime doladım, takı gibi durmadı mı? Detaylara düşüyoruz. ✨</li>
+                        <li><span class="text-brand-500 font-bold mr-1">19.</span> Küçük bir parça, büyük bir stil etkisi. Jutsack yine yapmış yapacağını. 💛</li>
+                        <li><span class="text-brand-500 font-bold mr-1">20.</span> Aynada kendime bakmalara doyamadığım o küçük detay. 🪞</li>
+                        <li><span class="text-brand-500 font-bold mr-1">21.</span> Tatil boyunca elim sürekli buna gitti, her şeye uyuyor! 🌸</li>
+                        <li><span class="text-brand-500 font-bold mr-1">22.</span> Saçımda, çantamda, belimde... Nereye koysam yakışıyor. 🪄</li>
+                        <li><span class="text-brand-500 font-bold mr-1">23.</span> Az eşya çok kombin felsefemin baş tacı. 🎒</li>
+                        <li><span class="text-brand-500 font-bold mr-1">24.</span> Rengi tenimle bütünleşti resmen, yazlık favorim belli oldu. 🐚</li>
+                    </ul>
+                </div>
+
+                <div class="card bg-brand-50">
+                    <h3 class="font-serif font-bold text-lg text-brand-900 border-b border-brand-200 pb-2 mb-4">Bandana (12 Adet)</h3>
+                    <ul class="text-sm text-gray-700 space-y-2 list-none">
+                        <li><span class="text-brand-500 font-bold mr-1">25.</span> 90'lar yaz stili geri döndüyse, bandanamız hazır. 🕶️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">26.</span> Rüzgarda saçım yüzüme yapışmasın diye en estetik çözümü buldum. 🌬️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">27.</span> Boynuma incecik bir fular gibi doladım, akşamüstü serinliğine birebir. ☕</li>
+                        <li><span class="text-brand-500 font-bold mr-1">28.</span> Hasır şapkanın altından şöyle hafifçe çıkacak, tam tatil ruhu! 👒</li>
+                        <li><span class="text-brand-500 font-bold mr-1">29.</span> Sadece bir aksesuar değil, benim için rüzgar savar! 😅</li>
+                        <li><span class="text-brand-500 font-bold mr-1">30.</span> Boynumdaki minik detayı soranlar için linki hazırladım bile. 🔗</li>
+                        <li><span class="text-brand-500 font-bold mr-1">31.</span> Çabasız görünmek için biraz çabalamak lazım derler, bandana ile sıfır çaba! ✌️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">32.</span> Saçım bozulduğunda hayat kurtaran yegane şey. 🆘</li>
+                        <li><span class="text-brand-500 font-bold mr-1">33.</span> Rengi, dokusu, duruşu... Alaçatı sokaklarına çok yakıştı. 🌺</li>
+                        <li><span class="text-brand-500 font-bold mr-1">34.</span> Pazar kahvesi ve bandanamla güne hazırım. 🥐</li>
+                        <li><span class="text-brand-500 font-bold mr-1">35.</span> Ufacık bir kumaş parçası enerjiyi nasıl bu kadar değiştirebilir? ⚡</li>
+                        <li><span class="text-brand-500 font-bold mr-1">36.</span> Her kombine ayrı renk bandana seçmek yeni hobim oldu. 🎨</li>
+                    </ul>
+                </div>
+
+                <div class="card bg-brand-50">
+                    <h3 class="font-serif font-bold text-lg text-brand-900 border-b border-brand-200 pb-2 mb-4">Şort Gömlek Takım (12 Adet)</h3>
+                    <ul class="text-sm text-gray-700 space-y-2 list-none">
+                        <li><span class="text-brand-500 font-bold mr-1">37.</span> "Ne giyeceğim" diye düşünmek istemediğim o sabah, elim direkt buna gitti. ☕</li>
+                        <li><span class="text-brand-500 font-bold mr-1">38.</span> Altı üstü takım, sıfır efor, maksimum şıklık. En sevdiğim denklem. 🧮</li>
+                        <li><span class="text-brand-500 font-bold mr-1">39.</span> Çarşıda rahat rahat gezmelik, efil efil bir parça. 🚲</li>
+                        <li><span class="text-brand-500 font-bold mr-1">40.</span> Sadece gömleğini mayomun üstüne de giyiyorum, aşırı pratik! 👙</li>
+                        <li><span class="text-brand-500 font-bold mr-1">41.</span> Akşam serinliği başlayınca takımın kıymetini anladım. 🌬️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">42.</span> Tatilin yarısı bitti, ben hala bu şortlayım, yıkayıp yıkayıp giyiyorum. 🧼</li>
+                        <li><span class="text-brand-500 font-bold mr-1">43.</span> Spor ayakkabıyla ayrı, sandaletle ayrı güzel. Tam bir yaz üniforması. 👟</li>
+                        <li><span class="text-brand-500 font-bold mr-1">44.</span> Ütü istememesi peki? Benim için olay bitmiştir kızlar. ✅</li>
+                        <li><span class="text-brand-500 font-bold mr-1">45.</span> Hasır çantamla ayrılmaz ikili oldular, renk uyumuna bayıldım. 🧺</li>
+                        <li><span class="text-brand-500 font-bold mr-1">46.</span> Şehirde de tatilde de giyilir, tam bir kapsül dolap parçası. 🏙️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">47.</span> Rengi o kadar tatlı ki, içimi açıyor. 🍋</li>
+                        <li><span class="text-brand-500 font-bold mr-1">48.</span> Çok sordunuz, çok beğendiniz. Yazın kurtarıcısı takımın linki bioda! 📌</li>
+                    </ul>
+                </div>
+                
+                <div class="card bg-brand-50 md:col-span-2">
+                    <h3 class="font-serif font-bold text-lg text-brand-900 border-b border-brand-200 pb-2 mb-4">Genel Jutsack / Tatil (12 Adet)</h3>
+                    <ul class="text-sm text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 list-none">
+                        <li><span class="text-brand-500 font-bold mr-1">49.</span> Valizi hazırlarken en çok güvendiğim parçaları aldım yanıma. Bavul hafif, kombinler sağlam! 🧳</li>
+                        <li><span class="text-brand-500 font-bold mr-1">50.</span> Yaz tatili dediğin çabasız olmalı. Jutsack tam da bunu yapıyor. 🌊</li>
+                        <li><span class="text-brand-500 font-bold mr-1">51.</span> Doğal kumaşlar, efil efil hissiyat... Alaçatı sıcağına anca böyle dayanıyorum. ☀️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">52.</span> Plajdan şehre, sabahtan akşama... Hayat kurtaran detaylar. 🥂</li>
+                        <li><span class="text-brand-500 font-bold mr-1">53.</span> Sorduğunuz bütün yazlıkların linki story'de kızlar, stoklar bitmeden yetişin. 🏃‍♀️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">54.</span> Az parça, çok eşleştirme. Bu yazın parolası bu! 🔑</li>
+                        <li><span class="text-brand-500 font-bold mr-1">55.</span> Her ortama uyan parçalar bulduğumda gözüm başka bir şey görmüyor. 😍</li>
+                        <li><span class="text-brand-500 font-bold mr-1">56.</span> Rüzgar, güneş ve rahat kıyafetler. Formül basit. 🐚</li>
+                        <li><span class="text-brand-500 font-bold mr-1">57.</span> Ayna karşısında saatlerce düşünmeye son, Jutsack ile 5 dakikada hazırım. ⏳</li>
+                        <li><span class="text-brand-500 font-bold mr-1">58.</span> Yazın o hafif ve telaşsız ruhuna çok uygun parçalar seçtim. 🕊️</li>
+                        <li><span class="text-brand-500 font-bold mr-1">59.</span> Kendimi içinde bu kadar rahat hissettiğim bir yaz alışverişi olmamıştı. 💯</li>
+                        <li><span class="text-brand-500 font-bold mr-1">60.</span> Favorilerim hızla tükeniyor, ben uyarımı yapayım da sonradan darılmaca olmasın. 😉</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">M. CTA BANKASI (50 Adet Eksiksiz)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm text-gray-700">
+                
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Linke Yönlendiren</h3>
+                    <ul class="space-y-2">
+                        <li>1. Üzerimdekini soranlar için linki buraya bırakıyorum.</li>
+                        <li>2. Linkini story'ye ekledim, oradan kolayca bakabilirsiniz.</li>
+                        <li>3. Biodaki linkten tüm renklere ulaşabilirsiniz kızlar.</li>
+                        <li>4. Hemen incelemek isteyenler için bağlantı aşağıda.</li>
+                        <li>5. Sorduğunuz parçanın linki profilimde sizi bekliyor.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Son Stok Vurgulu</h3>
+                    <ul class="space-y-2">
+                        <li>6. Bendeki desenin son adetleri kalmış, kaçırmayın derim.</li>
+                        <li>7. Stoklar hızla eriyor, yaz bitmeden kapın.</li>
+                        <li>8. Benim favorim buydu ve çok az kalmış, elinizi çabuk tutun!</li>
+                        <li>9. Sınırlı sayıda üretimmiş, bulan şanslıdır.</li>
+                        <li>10. Sepette bırakmayın, hemen tükeniyor benden söylemesi.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Kombin Seçtiren</h3>
+                    <ul class="space-y-2">
+                        <li>11. Sizce mavi olan mı, bej olan mı? Yorumlarda buluşalım.</li>
+                        <li>12. Bunu akşam yemeğine mi giyeyim, plaja mı? Ne diyorsunuz?</li>
+                        <li>13. Altına spor ayakkabı mı, hasır sandalet mi gider?</li>
+                        <li>14. Bandanayı saçta mı daha çok sevdiniz, boyunda mı?</li>
+                        <li>15. Birinci kombin mi, ikinci kombin mi? Tarafınızı seçin!</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Story Anketine Uygun</h3>
+                    <ul class="space-y-2">
+                        <li>16. Sizce bu pareo etek mi yoksa elbise mi oldu?</li>
+                        <li>17. Valize ilk hangisini atardınız? A mı B mi?</li>
+                        <li>18. Takımın gömleğini açık mı kullanayım, kapalı mı?</li>
+                        <li>19. Wrap'i çantaya bağlamak sizce de çok tatlı olmadı mı?</li>
+                        <li>20. Günün kurtarıcısı sizce hangisiydi?</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Web Sitesine Yönlendiren</h3>
+                    <ul class="space-y-2">
+                        <li>21. Jutsack'in yeni sezonuna mutlaka bir göz atın, harika parçalar var.</li>
+                        <li>22. Diğer desenleri görmek için siteye ışınlanabilirsiniz.</li>
+                        <li>23. Tam yazlık bir alışveriş için adres belli, siteye bekleriz.</li>
+                        <li>24. Kumaş detaylarını siteden daha net görebilirsiniz, tık tık!</li>
+                        <li>25. Bütün yazlık koleksiyonu incelemek için web sitesini ziyaret edin.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Yaz Bavulu Hissi Veren</h3>
+                    <ul class="space-y-2">
+                        <li>26. Bavulunuza mutlaka atın, hayat kurtarır.</li>
+                        <li>27. Tatil alışverişi yapıyorsanız bu parça listenizde olsun.</li>
+                        <li>28. Valizde hiç yer kaplamıyor, tatil için ideal!</li>
+                        <li>29. Yazlık kapsül dolabınızın yıldızı olmaya aday.</li>
+                        <li>30. Tatile çıkmadan önce mutlaka edinmeniz gereken bir parça.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Arkadaş Tavsiyesi Gibi Duran</h3>
+                    <ul class="space-y-2">
+                        <li>31. Kızlar bunu almayan pişman olur, o kadar netim.</li>
+                        <li>32. Gerçekten severek kullanıyorum, size de gönül rahatlığıyla öneririm.</li>
+                        <li>33. Benim yaz favorim bu oldu, bence siz de çok seveceksiniz.</li>
+                        <li>34. Aşırı pratik bir şey, aramızda kalsın ama her gün giyebilirim.</li>
+                        <li>35. Eğer benim gibi rahatınıza düşkünseniz, bunu kaçırmayın.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Hafif Esprili</h3>
+                    <ul class="space-y-2">
+                        <li>36. Ütü sevmeyenler derneği başkanı olarak bu takımı onaylıyorum.</li>
+                        <li>37. Pareoyu etek sananları şöyle alalım, evet kandırıldınız!</li>
+                        <li>38. Rüzgarla imtihanımı kazanan tek parça bu bandana oldu.</li>
+                        <li>39. Sadece bir wrap ile 3 ayrı kombin yaptım, bence kendimi tebrik etmeliyim.</li>
+                        <li>40. Tatil üniformam budur, yıkamadan üstümden çıkarmayı düşünmüyorum.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Sessiz Lüks & Aciliyet</h3>
+                    <ul class="space-y-2">
+                        <li>41. Çabasız ve şık görünmenin en kısa yolu.</li>
+                        <li>42. Kumaşın dokusu ve duruşu her şeyi anlatıyor.</li>
+                        <li>46. Tatil planları yaklaşırken sepete atmayı unutmayın.</li>
+                        <li>48. Gözünüze kestirdiyseniz çok beklemeyin derim, hızlı bitiyor.</li>
+                        <li>50. Sonradan 'keşke alsaydım' dememek için linke bir bakın kızlar.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl section-title">N. ÇEKİM GÜNÜ CHECKLIST</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Ürünler</h3>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Pareo (Tüm desenler ütülü/buharlanmış)</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Mini Wrap (Lekesiz, katlanmış)</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Bandana (Tüm varyasyonlar)</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Şort Gömlek Takım (Asılı/rulo, kırışıksız)</span></label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Styling & Aksesuar</h3>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Hasır şapka, kova şapka</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Büyük ve küçük hasır çantalar</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Altın zincir kolyeler, bileklikler</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Retro güneş gözlükleri, basic tişört</span></label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Teknik Ekipman</h3>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span class="font-medium text-red-600">Telefon şarjı %100 ve Powerbank</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Ayar: 4K 60fps / Izgara(Grid) Açık</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Lensler mikrofiber bezle silindi</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Telefon DİK tutulacak (9:16)</span></label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-bold text-brand-900 mb-3 border-b pb-2">Çekim & Dosya Kontrolü</h3>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Yüze sert gölge düşmüyor</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Arka planda çöp/tabela yok</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Geniş Açı, Orta Plan, Detay, Hareketli alındı</span></label>
+                        <label class="flex items-start gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"><input type="checkbox" class="mt-1"><span>Favoriler klasörü oluşturuldu</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl section-title">O. EN KRİTİK 20 KARE (KAMPANYANIN TAŞIYICILARI)</h2>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>No</th><th>Ürün</th><th>Lokasyon/Sahne</th><th>Kadraj</th><th>Neden Önemli?</th><th>Nerede Kullanılacak?</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td class="font-medium text-brand-900">Pareo</td><td>Rüzgarlı kumsal (Uçuşurken)</td><td>Tam Boy Video</td><td>Özgürlük hissi satar, en çok kaydet alır.</td><td>Ana Reels</td></tr>
+                        <tr><td>2</td><td class="font-medium text-brand-900">Pareo</td><td>Akşam yemeği (Etek gibi)</td><td>Orta Plan Foto</td><td>Ürünün çok yönlülüğünü kanıtlar.</td><td>Carousel Post İlk Kare</td></tr>
+                        <tr><td>3</td><td class="font-medium text-brand-900">Pareo</td><td>Ayna önü büstiyer bağlama</td><td>Yarı Boy Video</td><td>Eğitici içeriktir, izlenme süresi uzundur.</td><td>Kaydetlik Reels</td></tr>
+                        <tr><td>4</td><td class="font-medium text-brand-900">Pareo</td><td>Ters ışık gün batımı silüeti</td><td>Tam Boy Foto</td><td>Markanın imajını en estetik gösteren karedir.</td><td>Profil Post</td></tr>
+                        <tr><td>5</td><td class="font-medium text-brand-900">Wrap</td><td>Çanta sapına bağlama detayı</td><td>Sadece Çanta</td><td>En hızlı uygulanabilir stil tüyosudur.</td><td>Hikaye (Story) Eğitimi</td></tr>
+                        <tr><td>6</td><td class="font-medium text-brand-900">Wrap</td><td>Ayna karşısı şort üstü kemer</td><td>Ayna Selfiesi</td><td>Satın alma bahanesi yaratır ("Kemerim yoktu").</td><td>Story Satış Hunisi</td></tr>
+                        <tr><td>7</td><td class="font-medium text-brand-900">Wrap</td><td>Saça toka/fiyonk yapılmış hali</td><td>Yakın Portre</td><td>Yüz güzelliğiyle ürünü birleştirir.</td><td>Post Detay Karesi</td></tr>
+                        <tr><td>8</td><td class="font-medium text-brand-900">Wrap</td><td>Katlanmış valiz içi durumu</td><td>Flatlay Foto</td><td>"Az yer kaplar" vaadini görselleştirir.</td><td>Hikaye Bilgilendirme</td></tr>
+                        <tr><td>9</td><td class="font-medium text-brand-900">Bandana</td><td>Nostaljik, rüzgarda saçta</td><td>Omuzdan Yukarı</td><td>Duygu (nostalji) satar, estetik algı yüksektir.</td><td>Profil Ana Post</td></tr>
+                        <tr><td>10</td><td class="font-medium text-brand-900">Bandana</td><td>Kahve bardağı ile bilekte</td><td>Masa Detayı</td><td>Sessiz lüks, günlük hayat uyumunu gösterir.</td><td>Soft Selling Story</td></tr>
+                        <tr><td>11</td><td class="font-medium text-brand-900">Bandana</td><td>Boyunda fular, hasır şapka ile</td><td>Portre Foto</td><td>Kombin tamamlama gücünü kanıtlar.</td><td>Carousel 2. Kare</td></tr>
+                        <tr><td>12</td><td class="font-medium text-brand-900">Bandana</td><td>Farklı renklerin bir arada olduğu</td><td>Valiz Üstü</td><td>Renk/desen çeşitliliğini tek seferde sunar.</td><td>Anket Story'si</td></tr>
+                        <tr><td>13</td><td class="font-medium text-brand-900">Takım</td><td>Çarşıda arkadan yürüyüş</td><td>Boydan Video</td><td>Kumaşın dökümünü ve rahatlığını yaşatır.</td><td>"Benimle Gel" Reels</td></tr>
+                        <tr><td>14</td><td class="font-medium text-brand-900">Takım</td><td>Sadece gömlek + mayo ile</td><td>Yarım Boy</td><td>Plaj-Şehir pratikliğini gösterir.</td><td>Story Satış Başı</td></tr>
+                        <tr><td>15</td><td class="font-medium text-brand-900">Takım</td><td>Sandalyede kahve içme anı</td><td>Orta Plan Foto</td><td>Çabasız şıklık algısını en iyi veren karedir.</td><td>Lifestyle Post</td></tr>
+                        <tr><td>16</td><td class="font-medium text-brand-900">Takım</td><td>Arabada/Yolda otururken</td><td>Araç İçi</td><td>Seyahat rahatlığı vurgusu yapar.</td><td>Tatil Başlangıcı Story</td></tr>
+                        <tr><td>17</td><td class="font-medium text-brand-900">Hepsi</td><td>Valiz hazırlığı (Ürünler yatakta)</td><td>Kuşbakışı Video</td><td>"Tatilde ne lazım" listesi oluşturur.</td><td>Kapsül Dolap Reels</td></tr>
+                        <tr><td>18</td><td class="font-medium text-brand-900">Hepsi</td><td>Tatil özeti (4 ürün farklı yerde)</td><td>4'lü Kolaj</td><td>Tüm kampanyanın özetini tek kerede verir.</td><td>Final Satış Story'si</td></tr>
+                        <tr><td>19</td><td class="font-medium text-brand-900">Hepsi</td><td>Mavi kapı önü klasik poz</td><td>Tam Boy Foto</td><td>Alaçatı ruhu + Jutsack ürün eşleşmesi.</td><td>Profil Kapağı / Post</td></tr>
+                        <tr><td>20</td><td class="font-medium text-brand-900">Hepsi</td><td>Dondurma/Kahve anı samimi</td><td>Omuzdan Yukarı</td><td>Doğal'ın samimi tonuyla markayı kaynaştırır.</td><td>Etkileşim Story'si</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-900 text-brand-200 py-6 text-center text-xs mt-12 no-print">
+        <p>JUTSACK Strateji Dokümanı v1.0 | Eksiksiz ve Baskıya Hazır Sürüm</p>
+    </footer>
+
+</body>
+</html>
